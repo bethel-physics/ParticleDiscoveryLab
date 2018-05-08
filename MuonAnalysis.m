@@ -102,6 +102,9 @@ figure(3)
 % extract the peak region of the background counts
 
 
+% extract the peak region of the full counts 
+
+
 % extract the peak region of the signal counts (label it siginpeak)
 
 

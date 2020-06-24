@@ -1,25 +1,26 @@
 import math
 import matplotlib.pyplot as plt
 
+# Opens the txt file where the data is kept and puts it into a list with the form: E1, E2, px1, px2, py1, py2, pz1, pz2
 f=open("muon100k.txt","r")
 data=[]
 for i in range(100000):
     line=f.readline()
     line=line.split()
+    #print(line)
     data.append(line)
     for j in range(8):
         data[i][j]=float(data[i][j])
+        #print (data[i][j])
 f.close()
 
-# This program begins by loading a workspace that contains the  
+# This program begins by loading a Txt file that contains the  
 # momentum and energy data from about 1M events. It produces a 
 # graph that has mass on the x-axis and the number of muon pairs 
 # with that mass on the y-axis. 
 # The user can choose the range of GeV values shown. 
 
 ## DAY 1 = RECONSTRUCTION
-# LOAD THE WORKSPACE on the command window
-# Use the RUN SECTION button to advance through the code in chunks
 
 # Choose how many events to process
 Ntoprocess = input("How many events to process? ")
@@ -50,17 +51,15 @@ xK=0
 print("Looping over ", Ntoprocess, " events...", sep=" ")
 for i in range(Ntoprocess):
     # COMPUTE the mass of particle X -> mu mu
+    
     xEnergy=data[i][0]+data[i][1]
-    #print(xEnergy)
     for j in range(3):
         u1Mom[j]=data[i][j*2+2]
         u2Mom[j]=data[i][j*2+3]
         xMomScalar=xMomScalar+(u1Mom[j]+u2Mom[j])**2
     xMomScalar=math.sqrt(xMomScalar)
-    #print(xMomScalar)
     xMass=math.sqrt(abs(xEnergy**2-xMomScalar**2))
     Masses.append(xMass)
-    #print(xMass)
     
 
 
@@ -72,6 +71,7 @@ for i in range(Ntoprocess):
     # Calculate the Kinetic Energy of particle X. 
     # Store KE and mass values to plot later
     # Tip: make sure you mass value if "real" by using real(massvalue)
+    
     xMass=(xMass).real
     xK=xEnergy-xMass
     KineticEnergy.append(xK)

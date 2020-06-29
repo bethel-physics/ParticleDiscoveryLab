@@ -29,10 +29,10 @@ KineticEnergy = []
 
 # User-chosen min/max values and resolution
 #Min = input("Type in your min (in GeV): ")
-Min=30
+Min=2.8
 Min = float(Min)
 #Max = input("Type in your max (in GeV): ")
-Max=150
+Max=3.5
 Max = float(Max)
 #n = input("Type in the number of bins: ")
 n=50
@@ -210,8 +210,9 @@ bkgBin.append(binEdg[50])
 # Tool: POLLSF gives fit params, uncerts, y-values, chi^2 value
 #       needs bin centers, counts, uncertainties, N params
 #       This is a least-squares fitter that uses uncerts!
-fitparams, uncerts, yvalues, chisq = pollsf.pollsf(bkgMids, bkgCount, bkgErr[1], M=8)
-print(chisq/(50-8))
+m=2
+fitparams, uncerts, yvalues, chisq = pollsf.pollsf(bkgMids, bkgCount, bkgErr[1], m)
+print(chisq/(50-m))
 
 
 # EVALUATE your fit by chi^2 and plotting
@@ -253,7 +254,7 @@ plt.plot(bkgMids,yvalues)
 # CALCULATE background = yourFit(bin center) for all bins
 noBkg=np.zeros(len(midpoints))
 
-for j in range(8):
+for j in range(m):
     for i in range(len(midpoints)):
         noBkg[i]=noBkg[i]+(midpoints[i]**(j))*fitparams[j]
 for i in range(len(midpoints)):

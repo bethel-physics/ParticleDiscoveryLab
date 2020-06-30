@@ -1,3 +1,8 @@
+# Created by Jack Sisson on 6/30/2020
+# Email: jsis2000@outlook.com
+# Translation of the matlab function pollsf.m https://github.com/AlejGarcia/NM4P
+
+
 import numpy as np
 import math
 

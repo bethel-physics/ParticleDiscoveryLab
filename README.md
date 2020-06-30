@@ -9,7 +9,10 @@
 
 1. Download MuonAnalysisMaster_python2020.py, DoubleMuParked_100k.py, and pollsf.py from the github
 2. Install these packages for python: matplotlib, pickle, numpy, and scipy
-    Links:
+    Links:  matplotlib: https://matplotlib.org/
+            pickle: https://docs.python.org/3/library/pickle.html
+            numpy: https://numpy.org/
+            scipy: https://www.scipy.org/
 3. Make sure MuonAnalysisMaster_python2020.py, DoubleMuParked_100k.py, and pollsf.py are in the same file
 4. Run MuonAnalysisMaster_python2020.py
 

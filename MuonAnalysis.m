@@ -19,10 +19,6 @@ BinWidth = (Max - Min)/n;
 % Loop over the number of events with at least 2 muons
 disp(['Looping over ' num2str(length(px)) ' events...']);
 for i = 1:length(px)
-    if MomMarkers2(i) == 0
-        continue; % this is not a good event
-    end
-
     % Compute mass and kinetic energy
     
     % Store mass and kinetic energy for events in the chosen window

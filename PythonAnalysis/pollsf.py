@@ -63,4 +63,4 @@ def pollsf(x, y, sigma, M):
     chisqr = 0 
     for i in range(len(y)):
         chisqr=chisqr + ((y[i]-yy[i])/sigma[i])
-    return a_fit, sig_a, yy, chisqr
+    return a_fit, sig_a, yy, abs(chisqr)

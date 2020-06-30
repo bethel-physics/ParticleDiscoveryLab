@@ -10,7 +10,7 @@
 3. Download the function pollsf.m from https://github.com/AlejGarcia/NM4P/tree/master/Matlab
 4. Make sure the .mat file and pollsf.m are in the Matlab path
 5. Load workspace with command "load ('workspaceName.mat')"
-6. Run
+6. Run MuonAnalysisMaster.m
 
 **************************************** PYTHON INSTRUCTIONS ****************************************
 

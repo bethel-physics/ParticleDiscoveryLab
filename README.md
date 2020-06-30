@@ -1,7 +1,7 @@
 # MatlabOpenData
 **************************************** MATLAB INSTRUCTIONS ****************************************
 
-1. Download MuonAnalysis.m
+1. Download MuonAnalysisMaster.m
 2. Download muons100k.mat
     a. Or use txtFileReader.m to make your own workspace/.mat file
         i. Use NanoAOD2Arrays.py (in PythonAnalysis folder) to create custom txt file

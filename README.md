@@ -1,6 +1,11 @@
 # MatlabOpenData
-MATLAB-based projects using CMS Open Data
+**************************************** MATLAB INSTRUCTIONS ****************************************
 
-This is the README
 
-![Mass](images/MuonLab_JpsiSigBkg.png)
+
+
+
+**************************************** PYTHON INSTRUCTIONS ****************************************
+
+1. Download MuonAnalysisMaster_python2020.py
+2. Install these packages for python: 

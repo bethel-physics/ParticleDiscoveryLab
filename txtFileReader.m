@@ -1,4 +1,4 @@
-fileID = fopen('C:\Users\mar43485\Downloads\DoubleMuParked_100k.txt','r');
+fileID = fopen('fileName.txt','r');
 A= [];
 E=[];
 px=[];

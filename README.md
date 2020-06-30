@@ -3,13 +3,13 @@
 
 1. Download MuonAnalysisMaster.m
 2. Download muons100k.mat
-    a. Or use txtFileReader.m to make your own workspace/.mat file
-        i. Use NanoAOD2Arrays.py (in PythonAnalysis folder) to create custom txt file
-        ii. Make sure to save the txt file
-        iii. Run txtFileReader.m for your txt file to create a custom .mat file
+   - Or use txtFileReader.m to make your own workspace/.mat file
+     - Use NanoAOD2Arrays.py (in PythonAnalysis folder) to create custom txt file
+     - Make sure to save the txt file
+     - Run txtFileReader.m for your txt file to create a custom .mat file
 3. Download the function pollsf.m from https://github.com/AlejGarcia/NM4P/tree/master/Matlab
 4. Make sure the .mat file and pollsf.m are in the Matlab path
-5. Load workspace with command "load ('workspaceName.mat')"
+5. Load workspace with command `load ('workspaceName.mat')`
 6. Run MuonAnalysisMaster.m
 
 **************************************** PYTHON INSTRUCTIONS ****************************************

@@ -1,12 +1,10 @@
-% This program begins by loading a workspace that contains the  
-% momentum and energy data from about 1M events. It produces a 
-% graph that has mass on the x-axis and the number of muon pairs 
-% with that mass on the y-axis. 
-% The user can choose the range of GeV values shown. 
+%% SETUP
+% Use the RUN SECTION button to advance through the code in chunks
+% LOAD THE WORKSPACE
+load('DoubleMuParked_100k.mat')
+
 
 %% DAY 1 = RECONSTRUCTION
-% LOAD THE WORKSPACE on the command window
-% Use the RUN SECTION button to advance through the code in chunks
 
 % Choose how many events to process
 Ntoprocess = input('How many events to process? ');
@@ -24,6 +22,9 @@ BinWidth = (Max - Min)/n;
 % Loop over the number of events with at least 2 muons
 disp(['Looping over ' num2str(Ntoprocess) ' events...']);
 for i = 1:Ntoprocess
+    if MomMarkers2(i) == 0
+        continue; % this is not a good event
+    end
 
     % COMPUTE the mass of particle X -> mu mu
 
@@ -74,8 +75,8 @@ figure()
 
 
 
-%%% Great work! SAVE these plots to represent your RAW DATA.
-%%%             SAVE a DAY1 workspace (delete large E, px, py, pz)
+% Great work! SAVE these plots to represent your RAW DATA.
+%             SAVE a DAY1 workspace (delete large E, px, py, pz)
 
 %% DAY 2 = FITTING -- fit background on either side of the peak
 % LOAD your DAY1 workspace

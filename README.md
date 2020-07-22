@@ -8,7 +8,7 @@ Solutions and student code are available in both MATLAB and Python, but do not r
 **Software setup**: MATLAB should be installed on whatever computers students will use for the exercise. The "curve-fitting toolbox" is the only package
 used beyond the basic MATLAB install. This package might be part of your MATLAB license, or trials are available for 30 days. https://www.mathworks.com/products/matlab.html
 
-**Instructors**: download this Github code! Post the student blank (MuonAnalysis_student.m) and the workspace (DoubleMuParked_100k.mat) on your LMS. 
+**Instructors**: download this Github code! Post the student blank (`MuonAnalysis_student.m`) and the workspace (`DoubleMuParked_100k.mat`) on your LMS. 
 Also download the `pollsf.m` function file from Alejandro Garcia's [*Numerical Methods for Physics*](https://github.com/AlejGarcia/NM4P/tree/master/MatlabRevised) repository
 and post it for students on the LMS.
 
@@ -36,7 +36,7 @@ You will want to **provide students a mass window** in which to search. Tested, 
 ### To reprocess the data and make a new input workspace
  * `PythonAnalysis/NanoAOD2Arrays.py` can be run (`python -u PythonAnalysis/NanoAOD2Arrays.py`) to produce a text file with as many events as you want -- up to the ~61M stored in the NanoAOD ROOT file. See the comments in that file for accessing the NanoAOD file either via the web or by downloading a local file. You will need the ROOT program installed, either [directly](https://root.cern.ch/) or by setting up the [Open Data Software](http://opendata.cern.ch/docs/cms-virtual-machine-2011).
  * `txtFileReader.m` can be run in MATLAB to create a workspace from the text file. The variables will appear in the Workspace panel to the right -- you can see the size/shape of each array and double-click on a variable to see its contents. 
- * In MATLAB, click on the Workspace panel and type CTRL-S. Save a .mat file and post it for your students to download. 
+ * In MATLAB, click on the Workspace panel and type CTRL-s. Save a .mat file and post it for your students to download. 
 
 ## Python
 

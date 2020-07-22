@@ -1,3 +1,15 @@
+######################################################
+#
+#  June 2020
+#
+#  Script to read the Open Data parked dimuon sample
+#  and produce a "data" object with the 4-vector
+#  that is saved in a pickle file. 
+#
+#  Julie Hogan, j-hogan@bethel.edu
+#
+######################################################
+
 import math
 import matplotlib.pyplot as plt
 import pickle

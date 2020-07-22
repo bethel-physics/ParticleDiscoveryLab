@@ -18,18 +18,14 @@ BinWidth = (Max - Min)/n;
 
 % Loop over the number of events with at least 2 muons
 disp(['Looping over ' num2str(length(px)) ' events...']);
-for i = 1:length(px)
-    if MomMarkers2(i) == 0
-        continue; % this is not a good event
-    end
-    
+for i = 1:length(px)    
     % E = E1 + E2
-    E = Energy{i}{MomMarkers1(i)} + Energy{i}{MomMarkers2(i)};
+    E = E(i,1) + E(i,2);
     
     % p = p1 + p2 vector sum
-    Px = px{i}{MomMarkers1(i)} + px{i}{MomMarkers2(i)};
-    Py = py{i}{MomMarkers1(i)} + py{i}{MomMarkers2(i)};
-    Pz = pz{i}{MomMarkers1(i)} + pz{i}{MomMarkers2(i)};
+    px = px(i,1) + px(i,2);
+    py = py(i,1) + py(i,2);
+    pz = pz(i,1) + pz(i,2);
         
     % mc2 = sqrt( E^2 - p^2 ), where E and p are sums of the muons
     % GOAL for session 1 is implementing this correctly after intros

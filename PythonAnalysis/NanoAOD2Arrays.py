@@ -35,6 +35,7 @@ posMuon1 = TLorentzVector()
 negMuon1 = TLorentzVector()
 data = []
 isaved = 0
+textfile = open("DoubleMuParked_100k.txt", "w")
 
 ## Loop over the events in the TTree
 for ievent in xrange(t.GetEntries()):
@@ -71,11 +72,15 @@ for ievent in xrange(t.GetEntries()):
     Z = posMuon1+negMuon1
     hist.Fill(Z.M())
 
+    ## Store this event's information into the text file
+    textfile.write(str(allmuons)[1:-2]+'\n')
+
     ## Store this event's information into the data object
     data.append(allmuons)
     isaved += 1    
 
-## Write the data object into a pickle file for students to use
+## Write the data object into a text file and a pickle file for students to use
+textfile.close()
 pickle.dump(data,open('DoubleMuParked_100k.pkl','wb'))
 
 ## Test drawing your histogram

@@ -1,212 +1,281 @@
-######################################################
-#
-#  June 2020
-#
-#  Script to read the Open Data parked dimuon sample
-#  and produce a "data" object with the 4-vector
-#  that is saved in a pickle file. 
-#
-#  Julie Hogan, j-hogan@bethel.edu
-#
-######################################################
-
-import math
+import math, pickle
 import matplotlib.pyplot as plt
-import pickle
 import numpy as np
 from scipy.optimize import curve_fit
 from scipy.stats import norm
 import pollsf
 
-# Loading data from the .pkl file
+
+# Open the data file provided by your instructor
 data = pickle.load(open('DoubleMuParked_100k.pkl','rb'))
 
-# This program begins by loading a pkl file that contains the  
-# momentum and energy data from about 1M events. It produces a 
-# graph that has mass on the x-axis and the number of muon pairs 
-# with that mass on the y-axis. 
-# The user can choose the range of GeV values shown. 
 
-## DAY 1 = RECONSTRUCTION
+# ## Day 1 : Reconstruction
+# 
+# Your first task is to load the CMS data file!
+# Each data element has 8 pieces of information:
+# 
+# `E1`, `E2`, `px1`, `px2`, `py1`, `py2`, `pz1`, `pz2`
+# 
+# First choose a number of events to process, and the boundaries of your analysis window:
 
-# Choose how many events to process
-Ntoprocess = input("How many events to process? ")
-Ntoprocess = int(Ntoprocess)
+Ntoprocess = int(raw_input("How many events to process? "))
+Min = float(raw_input("Type in your min (in GeV): "))
+Max = float(raw_input("Type in your max (in GeV): "))
+n = int(raw_input("How many x-axis bins would you like? "))
 
-# Initialize a vector that will hold 1 invariant mass per event
+# Use these to compute a bin width
+BinWidth = (Max - Min)/n
+
+# let's get some empty objects ready for later
 Masses = []
 KineticEnergy = []
 
-# User-chosen min/max values and resolution
-Min = input("Type in your min (in GeV): ")
-Min = float(Min)
-Max = input("Type in your max (in GeV): ")
-Max = float(Max)
-n = input("Type in the number of bins: ")
-n = int(n)
-BinWidth = (Max - Min)/n
 
-# Loop over the number of events with at least 2 muons
-print("Looping over ", Ntoprocess, " events...", sep=" ")
+# Now we're ready to loop over the events in the data file and calculate the invariant mass of particle X. 
+# 
+# ### Think: 
+#  * How will you use the 8 pieces of information to calculate the mass of X?
+#  * How can you save only the events with a mass value inside your window?
+#  * How can you calculate the relativistic kinetic energy of particle X? 
+#  
+# Write code to calculate the mass and KE of particle X. Store the results in Masses and KineticEnergy if the event has a mass inside your window.
+
+print "Looping over",Ntoprocess,"events..."
 for i in range(Ntoprocess):
-   
-    # COMPUTE the mass of particle X -> mu mu
     
-
-    # THINK: Is this mass in your window from Min to Max? 
-    #        What should you do if it"s outside the window?
-
-
-    
-    # Calculate the Kinetic Energy of particle X. 
-    # Store KE and mass values to plot later
-    # Tip: make sure you mass value if "real" by using real(massvalue)
-    
-    
+    ## COMPUTE the mass of particle X that decays to 2 muons
     
 
 
-#end of the for loop
 
-# HISTOGRAMMING -- create mass and KE histograms
-# THINK: What do you expect your kinetic energy histogram to look like?
-#        What do you expect your mass histogram to look like?
-#        Make a quick sketch of what you expect for both plots
+    ## Store mass and KE for events with mass inside your window
+
+
+
+
+        
+print "Done!"
+
+
+# ### HISTOGRAMMING -- create mass and KE histograms              
+# 
+# #### THINK: 
+#  * What do you expect your kinetic energy histogram to look like?                   
+#  * What do you expect your mass histogram to look like?                             
+# 
+# Make a quick sketch of what you expect for both plots                            
+#                                                                                          
+# #### Vocab: imagine plot with 3 bins on x-axis: 0-10, 10-20, 20-30                           
+#  * "Bin edges": 0, 10, 20, 30                                                              
+#  * "Bin centers": 5, 15, 25 (want dots on plot to be here!)                                
+#  * "Bin width": 10  (you already have this for mass)
+#  
+# #### Tools: plt.hist
+# plt.hist creates histograms when given a list of data, number of bins, and x-axis range. Look up its arguments and outputs!
+# 
+# Create a MASS histogram:
 #
-# Vocab: imagine plot with 3 bins on x-axis: 0-10, 10-20, 20-30
-# "Bin edges": 0, 10, 20, 30
-# "Bin centers": 5, 15, 25 (want dots on plot to be here!)
-# "Bin width": 10
+# Draw your mass histogram. Use plt.show() to draw your plot. 
+# Be sure to save your y-axis values! 
+# Do you see a bump?
 
 
 
-# Draw a HISTOGRAM of counts versus mass
-# HISTOGRAM needs: a list of values, the number of bins, and the range
-# plt.hist will return the y values of counts, the x values of the bin edges, and a silent list of individual patches
-plt.figure()
 
 
 
-# THINK: What should the ERROR BARS be for each bin? 
-#        What should you do if the bin has ZERO entries?
-# Tools: 
-# plt.errorbars: draws dots+bars, needs bin centers, y values, 2d array of down 
-#           uncert list/up uncert list 
-
-
-plt.show()
-
-# Draw another HISTOGRAM of counts vs kinetic energy
-# Add ERROR BARS
-plt.figure()
-
-
-plt.show()
+# #### THINK: 
+#  * What should the ERROR BARS be for each bin?                                      
+#  * What should you do if the bin has ZERO entries?  
+#  
+# #### Tools:   plt.errorbar: 
+# 
+# plt.errorbar draws dots+bars when given x-axis bin centers, y-axis values, and up/down uncertainties. Look up its drawing options!                                                                                      
+#
+# Calculate the uncertainties
 
 
 
-### Great work! SAVE these plots to represent your RAW DATA.
 
-## DAY 2 = FITTING -- fit background on either side of the y
+# Define an array of bin centers
 
-# Vocab: imagine a mass plot with a bump in the middle
-# "Peak window": region along x-axis under the y
-# "background": smoothly falling slope of random events, 
-#               including some of the events in the y window
-# "signal": events in the y window minus the background
 
-# CHOOSE mass values in GeV for where the y lies. 
+
+
+# Draw the new plot with error bars
+
+
+
+
+
+
+#### Draw another HISTOGRAM with error bars of counts vs kinetic energy
+# Get the y-axis values by drawing a new KE histogram
+
+
+
+
+# Calculate the uncertainties
+
+
+
+
+
+# Define an array of bin centers
+
+
+
+
+
+# Draw the new plot with error bars
+
+
+
+
+
+
+# #### Great work! 
+# Save these plots to represent your raw data in your report. If you're using a jupyter notebook, save and checkpoint the notebook here. 
+
+# ## Day 2: Fitting
+# Fit the background on either side of the signal peak in your mass distribution. 
+# 
+# #### Vocab: imagine a mass plot with a bump in the middle
+#  * "Peak window": region along x-axis under the peak
+#  * "background": smoothly falling slope of random events, including some of the events in the peak window
+#  * "signal": events in the peak window minus the background
+
+# Choose mass values or bin numbers for where the peak lies
+peakmin = float(input('Enter your peak minimum (in GeV)'))
+peakmax = float(input('Enter your peak maximum (in GeV) '))
+
+# Convert these mass values to bin numbers
+
+
+
 
 
 
 # REMOVE the peak window completely from your list of: 
-# bin edges, bin centers, counts, uncertainties. 
+# mass centers, mass counts, mass uncertainties. 
 # This forms your BACKGROUND dataset
 
 
 
 
-# PERFORM a polynominal fit to the background
-# THINK: Which type of curve do you expect will match your data best?
-#        Imagine a curve connecting the two sides under your y.
-# Tool: POLLSF gives fit params, uncerts, y-values, chi^2 value
-#       needs bin centers, counts, up uncertainties, N params
-#       This is a least-squares fitter that uses uncerts!
 
 
 
-# EVALUATE your fit by chi^2 and plotting
-# -- Plotting: does the shape make any sense? Make a helpful plot
-# -- Chi^2 (or "SSE") is defined in Eq. 29. It describes the difference 
-#    between the points and the fitted curve. LARGER chi^2 tends to mean 
-#    more difference or scatter of points.
-#    OPTIMALLY, Chi^2 / (# points - # parameters) is around 1
-# REPEAT fitting until you are satisfied
-plt.figure()
+# #### PERFORM a polynominal fit to the background
+# #### THINK: 
+# Which type of curve do you expect will match your data best? Imagine a curve connecting the two sides under your peak.
+# 
+# #### Tool: 
+# The function *pollsf* gives fit params, uncerts, y-values, chi^2 value. Needs bin centers, counts, uncertainties, M parameters in the polynominal.
+# 
+# #### EVALUATE your fit:
+#  * Plotting: does the shape make any sense? 
+#  * Chi^2 is defined in Eq. 29. It describes the difference between the points and the fitted curve. LARGER chi^2 tends to mean more difference or scatter of points.
+#  * OPTIMALLY, Chi^2 / (# points - # parameters) is around 1
+# 
+# #### REPEAT fitting until you are satisfied
 
-plt.show()
-
-
-
-## SUBTRACTION -- now you will subtract that background from data
-# THINK: How will you estimate background in the signal y window?
-#        What do you expect the curve to look like after bkg subtraction?
-
-# CALCULATE background = yourFit(bin center) for all bins
-        
+# Use pollsf to fit a polynomial
+numpars = int(input('How many polynomial parameters? 1 (flat), 2 (line), etc: '))
 
 
 
 
-# PLOT the background curve on top of your mass histogram (save it!)
-# THINK: Are your estimated bkg values at all uncertain? 
-plt.figure()
-
-plt.show()
-
-
-# EVALUATE signal = data - background
-# THINK: What should you do if the background estimate is > data?
-#        How could you find the uncertainty in data - background?
+# Print the chi2 metric described above
 
 
 
 
-# PLOT the signal-only y with ERROR BARS
-plt.figure()
 
-plt.show()
-
-
-# Great work! Save the data+background and signal-only plots as ANALYSIS
-#             Save a DAY2 workspace!
-
-## DAY 3 = CHARACTERIZATION of your signal 
-# LOAD your DAY2 workspace
-
-# EXTRACT the characteristics (mean, width, uncerts) of your signal y
-# THINK: Which statistical distribution describes your signal y?
-# TOOL: curve_fit is a function that takes in the function you want to fit, x and y data,
-#       and an array in the form p0=[max(y),mean,uncerts]
-# SAVE a screencapture of your fit and its parameters.
-plt.figure()
-
-plt.show()
-
-# COMPARE: NSignal in signal y to NBackground under the y region
-# THINK: how can you find the number of events in the signal y?
-#        how can you find the number of bkg events under the y?
-# PRINT: these values along with their uncertainties
+# Plot the fit on top of the background points
 
 
 
-# Almost done!
-# THINK: Can you statistically distinguish signal from background?
-#        Can you find this particle with a web search for you mass?
-#        Research this particle (pdg.gov), find its width (capital Gamma)
-#        Do your mass & width agree with the known values? Find percent
-#        differences and also discrepancy/significance.
-#        If your width is *much* larger than accepted, why might this be 
+
+
+# ### SUBTRACTION -- now you will subtract that background from data
+# #### THINK: 
+# How will you estimate background in the signal peak window? What do you expect the curve to look like after bkg subtraction?
+
+# Draw your background estimate on top of your full mass distribution
 
 
 
+
+# #### THINK: 
+# Are your estimated bkg values at all uncertain? How could you evaluate an uncertainty on the number of background events in each bin?
+# 
+# #### EVALUATE signal = data - background
+# #### THINK: 
+# What should you do if the background estimate is > data? How could you find the uncertainty in data - background?
+
+# Subtract background and plot the resulting signal with error bars
+
+
+
+
+
+# #### Great work!
+# Save the data+background and signal-only plots for the analysis section of your report. 
+
+# ## Day 3: Characterization
+# Determine which particle you've discovered and use a fit to find its properties. 
+# 
+# #### EXTRACT the characteristics of your signal peak
+# #### THINK: 
+# Which statistical distribution describes your signal peak?
+# 
+# #### Tools: 
+#  * A Gaussian function *Gaus* has been defined below. It takes x-axis values, an amplitude, a mean, and a width.
+#  * The *curve_fit* function returns lists of fitted parameters and uncertainties when given a fit function, x and y-axis values, and initial conditions for the function's parameters.
+#  
+def Gaus(x,amplitude,mean,sigma):
+    return amplitude*np.exp(-(x-mean)**2/(2*sigma**2))
+
+
+# Use curve_fit to fit your signal peak using Gaus
+
+
+
+
+# Plot the fitted function on top of your signal distribution 
+# (tip: use many more x-axis values for smoothness!)
+
+
+
+
+
+# Print out the mean and width of your curve with uncertainties
+
+
+
+
+
+
+# #### COMPARE: NSignal in signal peak to NBackground under the peak region
+# #### THINK: 
+# How can you find the number of events in the signal peak? How can you find the number of bkg events under the peak?
+# 
+# #### PRINT: these values along with their uncertainties
+
+# Print signal and background counts with uncertainties
+
+
+
+
+
+# #### Almost done!
+# #### THINK: 
+#  * Can you statistically distinguish signal from background?
+#  * Can you find this particle with a web search for you mass?
+# 
+# Research this particle (pdg.gov), find its width (capital Gamma). 
+#  * Do your mass & width agree with the known values? 
+#  * Find percent differences and also discrepancy/significance. 
+#  * If your width is *much* larger than accepted, why might this be?

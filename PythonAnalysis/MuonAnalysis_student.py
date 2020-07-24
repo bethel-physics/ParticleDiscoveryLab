@@ -1,3 +1,5 @@
+### Welcome to the Particle Discovery Lab!
+
 import math, pickle
 import matplotlib.pyplot as plt
 import numpy as np

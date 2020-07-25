@@ -2,7 +2,24 @@
 
 The particle discovery lab uses [CMS dimuon data from 2012](http://doi.org/10.7483/OPENDATA.CMS.LVG5.QT81) published via the [CERN Open Data Portal](http://opendata.cern.ch/). 
 We have developed an undergraduate intermediate-level lab exercise to complement the many high school-level exercises available via the Open Data Portal.
-Solutions and student code are available in both MATLAB and Python, but do not require ROOT or Open Data Virtual Machines for students or instructors. 
+Solutions and student code are available in both MATLAB and Python, but do not require ROOT or Open Data Virtual Machines for students or instructors.
+
+The goal of this exercise is for students to reconstruct decays of unknown particle X (initial state) to 2 muons (final state). They will use histograms to display their calculated mass for particle X, and learn about fitting and subtracting background contributions from data. Uncertainty propagation concepts are included through each step of the analysis. After isolating the signal distribution they will determine which particle they have discovered and compare their observed properties (mass and width) to the known properties. 
+
+![J/psi](images/MuonLab_JpsiSigBkg.png)
+
+## Visualize the data
+To help introduce this exerience, there are event displays available from the DoubleMuParked dataset that we are studying. The [ISpy Event Display](http://opendata.cern.ch/visualise/events/cms#) is a web-based tool to study events interactively, so students could do this quickly on their laptops. To get
+to our dataset:
+ * Click on the "folder" icon in the upper left corner
+ * Select "Open files from the web"
+ * Single-click on "Run2012B/"
+ * Scroll down and single-click on "DoubleMuParked_0.ig"
+ * Click on any of the individual events that appear in the right-hand column
+ * Click "Load"
+Click and drag to rotate the image around! The yellow cylinder represents a detector element for scale, and the red boxes show which muon detector elements were hit by the 2 muons in each event. More detector or physics elements can be showed by making selections in the left-hand menu
+
+![ISpy event display](images/eventDisplay.PNG)
 
 ## MATLAB (MatlabAnalysis folder)
 **Software setup**: MATLAB should be installed on whatever computers students will use for the exercise. The "curve-fitting toolbox" is the only package

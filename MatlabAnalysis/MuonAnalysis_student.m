@@ -27,15 +27,12 @@ disp(['Looping over ' num2str(Ntoprocess) ' events...']);
 for i = 1:Ntoprocess
 
     % COMPUTE the mass of particle X -> mu mu
-    % SOLUTION: E = E1 + E2, p = p1 + p2 vector sum
-    %           mc2 = sqrt( E^2 - p^2 )
 
     
     
 
     % THINK: Is this mass in your window from Min to Max? 
     %        What should you do if it's outside the window?
-    % SOLUTION: discard those events
 
     
     

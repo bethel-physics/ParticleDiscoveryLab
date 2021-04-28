@@ -203,7 +203,7 @@ hold off;
  
 % PLOT the signal-only peak with ERROR BARS
 
-figure(3)
+figure(5)
 
 
 
@@ -218,29 +218,48 @@ figure(3)
 % LOAD your DAY2 workspace
 % 
 % EXTRACT the characteristics of your signal peak
-% 
 % THINK: Which statistical distribution describes your signal peak?
 % 
-% *CURVE FITTING app: Open this from the "Apps" menu*. Select variables containing 
-% your x and y data and the function you'd like. Find the MEAN and WIDTH with 
-% uncertainties in the output. *Come back here when you're done in the app.*
+% TOOL nlinfit: fits a given nonlinear function to data 
+%   * outputs: [paramsGaus, R, J, covariance]. We need 
+%       * paramsGaus (the fitted function parameters)
+%       * covariance (uncert^2 for each param runs down the diagonal)
+%   * inputs: nlinfit(x-axis data, y-axis data, function handle, 
+%     initial parameter guess)
+%   * usage example: 
+%     [paramsGaus, R, J, covariance] = nlinfit(X, Y, @functionName, guess)
 % 
-% COMPARE NSignal in signal peak to NBackground under the peak region
+% LOOK at your signal peak to create a vector of initial guesses for the
+% Gaussian parameters. THINK: what do the parameters represent?
 % 
-% THINK: how can you find the number of events in the signal peak? How can you 
-% find the number of bkg events under the peak?
-% 
-% PRINT these values along with their uncertainties.
-
-
+% CALL "nlinfit" on your signal peak using the function "gausfit".  
 
 
  
-% Almost done!
+
+% EXTRACT the MEAN and WIDTH of your fitted curve. Print these values
+% with their uncertainties.
+ 
+
+
+%% 
+% PLOT the Gaussian fit on top of your signal peak as a final figure. 
+% Include a LEGEND. 
+
+gaus_x = Min:(Max-Min)/100:Max; % a fine-division x-axis for a smooth curve
+gaus_y = gausfit(paramsGaus,gaus_x); % evaluate your fit at all x-axis values
+ 
+figure(6)
+% Repeat your plotting instructions from figure(5) first
+
+
+
+
+%% Almost done!
 % THINK: 
 % * Can you statistically distinguish signal from background?
 % * Can you find this particle with a web search for you mass?
-% * Research this particle (pdg.gov), find its width (capital Gamma)
+% * Research this particle (pdg.lbl.gov), find its width (capital Gamma)
 % * Do your mass & width agree with the known values within their uncertainties? 
 %   Find percent differences and also discrepancy/significance.
 % * If your width is *much* larger than accepted, why might this be?
@@ -248,6 +267,6 @@ figure(3)
 %
 %
 % Great work! 
-% Save screenshots and all the numerical values (mean, width, Nsignal, Nbackground, 
+% Save plots and all the numerical values (mean, width, Nsignal, Nbackground, 
 % all with uncertainties, percent differences, discrepancy significances) for 
 % the Results of your report.

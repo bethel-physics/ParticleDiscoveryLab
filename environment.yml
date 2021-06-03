@@ -1,6 +1,6 @@
-name: ParticleDiscoveryLabEnvironment
-channels:
-  - conda-forge
+#name: ParticleDiscoveryLabEnvironment
+#channels:
+#  - conda-forge
 dependencies:
   - python = 3
   - math

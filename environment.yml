@@ -3,11 +3,11 @@
 #  - conda-forge
 dependencies:
   - python = 3
-  - math
-  - pickle
-  - matplotlib
-  - numpy
-  - scipy
+  - math *
+  - pickle *
+  - matplotlib *
+  - numpy *
+  - scipy *
 #  - pip
 #  pip:
 #    - pypi_math

@@ -4,7 +4,7 @@
 dependencies:
   #- python = 3
   #- math *
-  - pickle *
+  #- pickle *
   - matplotlib *
   - numpy *
   - scipy *

@@ -1,17 +1,5 @@
-#name: ParticleDiscoveryLabEnvironment
-#channels:
-#  - conda-forge
 dependencies:
   - python = 2
-  #- math *
-  #- pickle *
   - matplotlib *
   - numpy *
   - scipy *
-#  - pip
-#  pip:
-#    - pypi_math
-#    - pypi_pickle
-#    - pypi_matplotlib
-#    - pypi_numpy
-#    - pypi_scipy

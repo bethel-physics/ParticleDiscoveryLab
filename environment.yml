@@ -2,8 +2,8 @@
 #channels:
 #  - conda-forge
 dependencies:
-  - python = 3
-  - math *
+  #- python = 3
+  #- math *
   - pickle *
   - matplotlib *
   - numpy *

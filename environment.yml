@@ -1,4 +1,6 @@
 name: ParticleDiscoveryLabEnvironment
+channels:
+  - conda-forge
 dependencies:
   - python = 3
   - math
@@ -6,10 +8,10 @@ dependencies:
   - matplotlib
   - numpy
   - scipy
-  - pip
-  pip:
-    - pypi_math
-    - pypi_pickle
-    - pypi_matplotlib
-    - pypi_numpy
-    - pypi_scipy
+#  - pip
+#  pip:
+#    - pypi_math
+#    - pypi_pickle
+#    - pypi_matplotlib
+#    - pypi_numpy
+#    - pypi_scipy

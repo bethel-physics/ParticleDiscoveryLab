@@ -66,8 +66,9 @@ Install these packages for python:
  * [scipy](https://www.scipy.org/)
  * [jupyter](https://jupyter.org/) optional, for using the notebooks. 
 
-**Binder** https://mybinder.org/v2/gh/bethel-physics/ParticleDiscoveryLab/HEAD
-If you fork this github page, to make your own Binder notebook, click [here](mybinder.org) and enter this link: https://github.com/bethel-physics/ParticleDiscoveryLab
+**Binder**: You can run these Jupyter notebooks on the web! https://mybinder.org/v2/gh/bethel-physics/ParticleDiscoveryLab/HEAD
+
+If you fork this github repository to make it your own, you can provide students your own Binder link. Go to [mybinder.org](mybinder.org) and enter the link to your own github repository, such as: https://github.com/<yourUserNameHere>/ParticleDiscoveryLab.
 
 **Instructors**: download this Github code! Post the student blank (`MuonAnalysis_student.py`), the pickle file (`DoubleMuParked_100k.pkl`), and `pollsf.py` on your LMS. The `pollsf.py` function file is adapted directly from Alejandro Garcia's [*Numerical Methods for Physics*](https://github.com/AlejGarcia/NM4P/tree/master/MatlabRevised) repository. There are also juptyer notebooks available for coding in a web browser. 
 

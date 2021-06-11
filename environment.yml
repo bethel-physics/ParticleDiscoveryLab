@@ -1,0 +1,5 @@
+dependencies:
+  - python = 2
+  - matplotlib *
+  - numpy *
+  - scipy *

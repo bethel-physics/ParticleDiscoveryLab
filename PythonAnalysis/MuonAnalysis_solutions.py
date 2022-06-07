@@ -71,7 +71,9 @@ print "Done!"
 #  * What do you expect your kinetic energy histogram to look like?                   
 #  * What do you expect your mass histogram to look like?                             
 # 
-# Make a quick sketch of what you expect for both plots                            
+# Make a quick sketsch of what you expect for both plots      
+#
+# SOLUTION: higher energies are always less probable, so falling from 0. Mass is similar: falling from low -> high, but with a bump                      
 #                                                                                          
 # #### Vocab: imagine plot with 3 bins on x-axis: 0-10, 10-20, 20-30                           
 #  * "Bin edges": 0, 10, 20, 30                                                              
@@ -81,7 +83,7 @@ print "Done!"
 # #### Tools: plt.hist
 # plt.hist creates histograms when given a list of data, number of bins, and x-axis range. Look up its arguments and outputs!
 # 
-# Create a MASS histogram -- do you see a bump?
+# Create a MASS histogram:
 
 plt.figure(1)
 massCounts, massEdges, patches = plt.hist(Masses,n,(Min,Max),histtype='step') ## want to keep the y-axis values 
@@ -95,11 +97,16 @@ plt.show()
 #  * What should the ERROR BARS be for each bin?                                      
 #  * What should you do if the bin has ZERO entries?  
 #  
+# SOLUTION: Error on N = sqrt(N)
+#       Zero is not exact! Just lack of data. Use error_up = 1 (or dig deeper and talk about Poisson upper bound on 0!).
+#       But error bars shouldn't dip below 0 here, that would be unphysical.
+#
 # #### Tools:   plt.errorbar: 
 # 
-# plt.errorbar draws dots+bars when given x-axis bin centers, y-axis values, and up/down uncertainties. Look up its drawing options!                                                                                      
+# plt.errorbar draws dots+bars when given x-axis bin centers, y-axis values, and up/down uncertainties. 
+# Look up its drawing options: https://matplotlib.org/stable/gallery/statistics/errorbar_features                                                                                      
 
-# Calculate the uncertainties
+# Calculate lists of uncertainty values for plt.errorbar
 error = [[],[]]
 error[0] = np.sqrt(massCounts)
 error[1] = np.maximum(np.sqrt(massCounts),np.ones(len(massCounts)))
@@ -108,7 +115,7 @@ error[1] = np.maximum(np.sqrt(massCounts),np.ones(len(massCounts)))
 massCenters = massEdges+BinWidth*0.5
 massCenters = massCenters[:-1] # cut off the extra at the end
 
-# Draw the new plot with error bars (k is black)
+# Draw the new plot with error bars
 plt.errorbar(massCenters, massCounts, yerr=error, fmt='.k',ecolor='k')
 plt.xlabel('dimuon mass (GeV)')
 plt.ylabel('number of muon pairs')
@@ -130,7 +137,7 @@ keerror[1] = np.maximum(np.sqrt(keCounts),np.ones(len(keCounts)))
 keCenters = keEdges+(800/n)*0.5
 keCenters = keCenters[:-1] # cut off the extra at the end
 
-# Draw the new plot with error bars (k is black)
+# Draw the new plot with error bars
 plt.errorbar(keCenters, keCounts, yerr=keerror, fmt='.k',ecolor='k')
 plt.xlabel('kinetic energy (GeV)')
 plt.ylabel('number of muon pairs')
@@ -154,14 +161,13 @@ peakmin = float(input('Enter your peak minimum (in GeV)'))
 peakmax = float(input('Enter your peak maximum (in GeV) '))
 
 # Convert these mass values to bin numbers
-iMin = int(round((peakmin-Min)/BinWidth))
+iMin = int(round((peakmin-Min)/BinWidth)) # Just an example: fine to hardcode numbers
 iMax = int(round((peakmax-Min)/BinWidth))
 print iMin,iMax
 
 # REMOVE the peak window completely from your list of: 
-# mass edges, mass centers, mass counts, mass uncertainties. 
+# mass centers, mass counts, and mass uncertainties. 
 # This forms your BACKGROUND dataset
-bkgEdges = massEdges[0:iMin].tolist() + massEdges[iMax:-1].tolist()
 bkgCounts = massCounts[0:iMin].tolist() + massCounts[iMax:-1].tolist()
 bkgCenters = massCenters[0:iMin].tolist() + massCenters[iMax:-1].tolist()
 bkgError = [[],[]]
@@ -169,7 +175,7 @@ bkgError[0] = error[0][0:iMin].tolist() + error[0][iMax:-1].tolist()
 bkgError[1] = error[1][0:iMin].tolist() + error[1][iMax:-1].tolist()
 
 # Check: edges should have 1 more than the others
-print len(bkgEdges),len(bkgCounts),len(bkgCenters),len(bkgError[0])
+print len(bkgCounts),len(bkgCenters),len(bkgError[0])
 
 
 # #### PERFORM a polynominal fit to the background
@@ -179,14 +185,14 @@ print len(bkgEdges),len(bkgCounts),len(bkgCenters),len(bkgError[0])
 # *SOLUTION: Probably a line, or 2rd/3rd order poly, likely not much higher*
 # 
 # #### Tool: 
-# The function *pollsf* gives fit params, uncerts, y-values, chi^2 value. Needs bin centers, counts, uncertainties, M parameters in the polynominal.
+# The function *pollsf* is defined locally in pollsf.py.  Read pollsf.py to find information on the input and output parameters.
 # 
 # #### EVALUATE your fit:
 #  * Plotting: does the shape make any sense? 
-#  * Chi^2 is defined in Eq. 29. It describes the difference between the points and the fitted curve. LARGER chi^2 tends to mean more difference or scatter of points.
+#  * Chi^2 is defined in "Place Holder". It describes the difference between the points and the fitted curve. LARGER chi^2 tends to mean more difference or scatter of points.
 #  * OPTIMALLY, Chi^2 / (# points - # parameters) is around 1
 # 
-# #### REPEAT fitting until you are satisfied
+# #### REPEAT fitting until you are satisfied with both of these metrics
 
 # Use pollsf to fit a polynomial
 numpars = int(input('How many polynomial parameters? 1 (flat), 2 (line), etc: '))
@@ -196,6 +202,7 @@ params,paramerrs,fityvals,chisq = pollsf.pollsf(bkgCenters,bkgCounts,bkgError[1]
 print chisq/(len(bkgCenters) - numpars)
 
 # Plot the fit on top of the background points
+# Avoid using connecting lines between the points in your background fit
 plt.figure(3)
 plt.errorbar(bkgCenters, bkgCounts, yerr=bkgError, fmt='.k', ecolor='k')
 plt.plot(bkgCenters,fityvals,'b-')
@@ -206,10 +213,13 @@ plt.show()
 
 
 # ### SUBTRACTION -- now you will subtract that background from data
+#
+# In order to subtract the background contribution from your orginal data, you will need to estimate the background in your signal peak window.
+#
+# *SOLUTION: Evaluate the function at x-values inside the peak window.*
+#
 # #### THINK: 
-# How will you estimate background in the signal peak window? What do you expect the curve to look like after bkg subtraction?
-# 
-# *SOLUTION: evaluate the function at x-values inside the peak window. After subtraction should look like a ~Gaussian peak*
+# How will you estimate background in the signal peak window? 
 
 # Draw your background estimate on top of your full mass distribution
 paramlist = params.tolist()
@@ -226,17 +236,25 @@ plt.show()
 
 
 # #### THINK: 
-# Are your estimated bkg values at all uncertain? How could you evaluate an uncertainty on the number of background events in each bin?
+# Are your estimated bkg values at all uncertain? 
 # 
-# *SOLUTION: Yes, of course! But we have not discussed covariance, so we won't attempt to use the fitted parameters' uncertainties. You could estimate an uncertainty of 0, or use the Poisson sqrt(N) formula as shown here.*  
+# How could you evaluate an uncertainty on the number of background events in each bin?
 # 
+# *SOLUTION: Yes, of course! But we have not discussed covariance and will make the ~safe assumption that our background uncert is small. The pollsf function chooses to return only variances, but you could edit it to return the whole matrix, or you could estimate an uncertainty of 0, or use the Poisson sqrt(N) formula as shown here.*  
+# 
+# What do you expect the curve to look like after background subtraction?
+#
+# *SOLUTION: After subtraction should look like a ~Gaussian peak*
+#
 # #### EVALUATE signal = data - background
 # #### THINK: 
-# What should you do if the background estimate is > data? How could you find the uncertainty in data - background?
+# Do you have any bins where the background estimate is larger than the data? What do you think about this situation? 
 # 
-# *SOLUTION: values less than 0 are not unphysical anymore, since this is an "estimate". Uncertainty must be propagated: sqrt(errData^2 + errBkg^2)*
+# How could you find the uncertainty in data - background?
+# 
+# *SOLUTION: values less than 0 are not unphysical anymore, since this is an "estimate". Values less than 0 can happen when subtracting background, it's no longer necessarily unphysical. Uncertainty is like radioactivity: err = sqrt(errData^2 + errBkg^2), NOT sqrt after subtracting! You could estimate errBkg = 0, or assume Poisson and say errBkg = sqrt(N)*
 
-# Subtract background and plot the resulting signal with error bars
+# Subtract background and plot the resulting signal-only peak with error bars
 signalCounts = massCounts - fittedCounts
 signalErrors = [[],[]]
 signalErrors[0] = np.sqrt(signalCounts + fittedCounts)
@@ -258,10 +276,13 @@ plt.show()
 # #### EXTRACT the characteristics of your signal peak
 # #### THINK: 
 # Which statistical distribution describes your signal peak?
+#
+# *SOLUTION: they should do well with a Gaussian shape. The initial conditions can be basic like p0=[1, (eyeballed peak center), 0.5]*
 # 
 # #### Tools: 
 #  * A Gaussian function *Gaus* has been defined below. It takes x-axis values, an amplitude, a mean, and a width.
-#  * The *curve_fit* function returns lists of fitted parameters and uncertainties when given a fit function, x and y-axis values, and initial conditions for the function's parameters.
+#  * The *curve_fit* function returns lists of fitted parameters and uncertainties when given a fit function, x and y-axis values, and initial conditions for the function's parameters. 
+#  * Read about how to use this function at https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.curve_fit.html
 #  
 # *SOLUTION: they should do well with a Gaussian shape. The initial conditions can be basic like p0=[1, (eyeballed peak center), 0.5]*
 
@@ -269,13 +290,13 @@ def Gaus(x,amplitude,mean,sigma):
     return amplitude*np.exp(-(x-mean)**2/(2*sigma**2))
 
 
-# Use curve_fit to fit your signal peak using Gaus
+# Use curve_fit to fit your signal peak using Gaus as the fit function
 gausParams,gausUncerts = curve_fit(Gaus,massCenters,signalCounts,p0=[1,3,0.1])
 print gausParams
 
 
 # Plot the fitted function on top of your signal distribution 
-# (tip: use many more x-axis values for smoothness!)
+# xGaus below gives you lots of x-axis points to plot a smooth curve
 xGaus = np.linspace(Min,Max,501).tolist()
 
 plt.figure(5)
@@ -287,17 +308,20 @@ plt.title('Fitted signal')
 plt.show()
 
 # Print out the mean and width of your curve with uncertainties
+# SOLUTION: they need to access specific elements of paramsGaus and covariance. The 2nd element is the mean and the 3rd element is the width.
 print "Mean =",gausParams[1],"+/-",gausUncerts[1][1]
 print "Width =",abs(gausParams[2]),"+/-",gausUncerts[2][2]
 
 
-# #### COMPARE: NSignal in signal peak to NBackground under the peak region
+# #### COMPARE: the number of signal events in signal peak window to the number of background events under the peak window.
 # #### THINK: 
-# How can you find the number of events in the signal peak? How can you find the number of bkg events under the peak?
+# How can you find the number of events in the signal peak? 
+# 
+# How can you find the number of bkg events under the peak?
 # 
 # #### PRINT: these values along with their uncertainties
 # 
-# *SOLUTION: NSignal = sum up counts from "sig counts". NBackground = sum up counts from "fittedcounts" (iMin to iMax). Of course, the groups are free to integrate their 2 fitted functions from peakmin to peakmax! They should be able to show that sqrt(sumtotal) is the proper error propagation across the sum over bins.*
+# *SOLUTION: NSignal = sum up counts from "sig counts". NBackground = sum up counts from "fittedcounts" (iMin to iMax). Of course, the groups are free to integrate their 2 fitted functions from peakmin to peakmax! For uncertainties, they should be able to show that sqrt(sumtotal) is really what you get from propagation of sqrt(N) errors through the sum.*
 
 bkginpeak = sum(fittedCounts[iMin:iMax])
 siginpeak = sum(signalCounts[iMin:iMax])
@@ -310,9 +334,9 @@ print 'NSig =',siginpeak,'+/-',math.sqrt(siginpeak)
 #  * Can you statistically distinguish signal from background?
 #  * Can you find this particle with a web search for you mass?
 # 
-# Research this particle (pdg.gov), find its width (capital Gamma). 
+# Research this particle (https://pdg.lbl.gov), find its width (capital Gamma). 
 #  * Do your mass & width agree with the known values? 
 #  * Find percent differences and also discrepancy/significance. 
 #  * If your width is *much* larger than accepted, why might this be?
 #  
-# *SOLUTION: for the Z boson their values should agree well -- mass should agree at least within +/- width! For light mesons they will find that the width they measure is much much too large, because of limited detector resolution. The lifetimes of these mesons can't be determined from this mass plot.*
+# *SOLUTION: Generally their masses should agree within the observed widths, and usually within a few times the parameter uncertainty. For Z bosons (short-lived) the width should also agree because it is large (several GeV). For the mesons their width will be MUCH too large -- the CMS detector resolution is not fine enough to measure the lifetime of these particles and the width is inflated.*

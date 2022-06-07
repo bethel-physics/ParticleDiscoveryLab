@@ -77,12 +77,9 @@ print "Done!"
 # plt.hist creates histograms when given a list of data, number of bins, and x-axis range. Look up its arguments and outputs!
 # 
 # Create a MASS histogram:
-#
+
 # Draw your mass histogram. Use plt.show() to draw your plot. 
 # Be sure to save your y-axis values! 
-# Do you see a bump?
-
-
 
 
 
@@ -93,9 +90,10 @@ print "Done!"
 #  
 # #### Tools:   plt.errorbar: 
 # 
-# plt.errorbar draws dots+bars when given x-axis bin centers, y-axis values, and up/down uncertainties. Look up its drawing options!                                                                                      
-#
-# Calculate the uncertainties
+# plt.errorbar draws dots+bars when given x-axis bin centers, y-axis values, and up/down uncertainties. 
+# Look up its drawing options: https://matplotlib.org/stable/gallery/statistics/errorbar_features                                                                                       
+
+# Calculate lists of uncertainty values for plt.errorbar
 
 
 
@@ -112,7 +110,7 @@ print "Done!"
 
 
 
-#### Draw another HISTOGRAM with error bars of counts vs kinetic energy
+#  #### Draw another HISTOGRAM with error bars of counts vs kinetic energy
 # Get the y-axis values by drawing a new KE histogram
 
 
@@ -140,7 +138,7 @@ print "Done!"
 # #### Great work! 
 # Save these plots to represent your raw data in your report. If you're using a jupyter notebook, save and checkpoint the notebook here. 
 
-# ## Day 2: Fitting
+# ## Day 2 : Fitting
 # Fit the background on either side of the signal peak in your mass distribution. 
 # 
 # #### Vocab: imagine a mass plot with a bump in the middle
@@ -160,7 +158,7 @@ peakmax = float(input('Enter your peak maximum (in GeV) '))
 
 
 # REMOVE the peak window completely from your list of: 
-# mass centers, mass counts, mass uncertainties. 
+# mass bin centers, mass counts, and mass uncertainties. 
 # This forms your BACKGROUND dataset
 
 
@@ -174,14 +172,14 @@ peakmax = float(input('Enter your peak maximum (in GeV) '))
 # Which type of curve do you expect will match your data best? Imagine a curve connecting the two sides under your peak.
 # 
 # #### Tool: 
-# The function *pollsf* gives fit params, uncerts, y-values, chi^2 value. Needs bin centers, counts, uncertainties, M parameters in the polynominal.
+# The function *pollsf* is defined locally in pollsf.py.  Read pollsf.py to find information on the input and output parameters.
 # 
 # #### EVALUATE your fit:
 #  * Plotting: does the shape make any sense? 
-#  * Chi^2 is defined in Eq. 29. It describes the difference between the points and the fitted curve. LARGER chi^2 tends to mean more difference or scatter of points.
+#  * Chi^2 is defined in "Place Holder". It describes the difference between the points and the fitted curve. LARGER chi^2 tends to mean more difference or scatter of points.
 #  * OPTIMALLY, Chi^2 / (# points - # parameters) is around 1
 # 
-# #### REPEAT fitting until you are satisfied
+# #### REPEAT fitting until you are satisfied with both of these metrics
 
 # Use pollsf to fit a polynomial
 numpars = int(input('How many polynomial parameters? 1 (flat), 2 (line), etc: '))
@@ -196,14 +194,17 @@ numpars = int(input('How many polynomial parameters? 1 (flat), 2 (line), etc: ')
 
 
 # Plot the fit on top of the background points
-
+# Avoid using connecting lines between the points in your background fit
 
 
 
 
 # ### SUBTRACTION -- now you will subtract that background from data
+#
+# In order to subtract the background contribution from your orginal data, you will need to estimate the background in your signal peak window.
+#
 # #### THINK: 
-# How will you estimate background in the signal peak window? What do you expect the curve to look like after bkg subtraction?
+# How will you estimate background in the signal peak window? 
 
 # Draw your background estimate on top of your full mass distribution
 
@@ -211,11 +212,17 @@ numpars = int(input('How many polynomial parameters? 1 (flat), 2 (line), etc: ')
 
 
 # #### THINK: 
-# Are your estimated bkg values at all uncertain? How could you evaluate an uncertainty on the number of background events in each bin?
+# Are your estimated bkg values at all uncertain? 
 # 
+# How could you evaluate an uncertainty on the number of background events in each bin?
+# 
+# What do you expect the curve to look like after background subtraction?
+#
 # #### EVALUATE signal = data - background
 # #### THINK: 
-# What should you do if the background estimate is > data? How could you find the uncertainty in data - background?
+# Do you have any bins where the background estimate is larger than the data? What do you think about this situation? 
+# 
+# How could you find the uncertainty in data - background?
 
 # Subtract background and plot the resulting signal with error bars
 
@@ -226,7 +233,7 @@ numpars = int(input('How many polynomial parameters? 1 (flat), 2 (line), etc: ')
 # #### Great work!
 # Save the data+background and signal-only plots for the analysis section of your report. 
 
-# ## Day 3: Characterization
+# ## Day 3 : Characterization
 # Determine which particle you've discovered and use a fit to find its properties. 
 # 
 # #### EXTRACT the characteristics of your signal peak
@@ -235,19 +242,20 @@ numpars = int(input('How many polynomial parameters? 1 (flat), 2 (line), etc: ')
 # 
 # #### Tools: 
 #  * A Gaussian function *Gaus* has been defined below. It takes x-axis values, an amplitude, a mean, and a width.
-#  * The *curve_fit* function returns lists of fitted parameters and uncertainties when given a fit function, x and y-axis values, and initial conditions for the function's parameters.
-#  
+#  * The *curve_fit* function returns lists of fitted parameters and uncertainties when given a fit function, x and y-axis values, and initial conditions for the function's parameters. 
+#  * Read about how to use this function at https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.curve_fit.html
+
 def Gaus(x,amplitude,mean,sigma):
     return amplitude*np.exp(-(x-mean)**2/(2*sigma**2))
 
-
-# Use curve_fit to fit your signal peak using Gaus
+# Use curve_fit to fit your signal peak using Gaus as the fit function
 
 
 
 
 # Plot the fitted function on top of your signal distribution 
-# (tip: use many more x-axis values for smoothness!)
+# xGaus below gives you lots of x-axis points to plot a smooth curve
+xGaus = np.linspace(Min,Max,501).tolist()
 
 
 
@@ -260,9 +268,11 @@ def Gaus(x,amplitude,mean,sigma):
 
 
 
-# #### COMPARE: NSignal in signal peak to NBackground under the peak region
+# #### COMPARE: the number of signal events in signal peak window to the number of background events under the peak window.
 # #### THINK: 
-# How can you find the number of events in the signal peak? How can you find the number of bkg events under the peak?
+# How can you find the number of events in the signal peak? 
+# 
+# How can you find the number of bkg events under the peak?
 # 
 # #### PRINT: these values along with their uncertainties
 
@@ -277,7 +287,7 @@ def Gaus(x,amplitude,mean,sigma):
 #  * Can you statistically distinguish signal from background?
 #  * Can you find this particle with a web search for you mass?
 # 
-# Research this particle (pdg.gov), find its width (capital Gamma). 
+# Research this particle (https://pdg.lbl.gov), find its width (capital Gamma). 
 #  * Do your mass & width agree with the known values? 
 #  * Find percent differences and also discrepancy/significance. 
 #  * If your width is *much* larger than accepted, why might this be?

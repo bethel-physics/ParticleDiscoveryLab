@@ -85,6 +85,9 @@ print "Done!"
 # 
 # Create a MASS histogram:
 
+# Draw your mass histogram. Use plt.show() to draw your plot. 
+# Be sure to save your y-axis values! 
+
 plt.figure(1)
 massCounts, massEdges, patches = plt.hist(Masses,n,(Min,Max),histtype='step') ## want to keep the y-axis values 
 plt.xlabel('dimuon mass (GeV)')
@@ -124,7 +127,7 @@ plt.show()
 
 
 #  #### Draw another HISTOGRAM with error bars of counts vs kinetic energy
-
+# Get the y-axis values by drawing a new KE histogram
 plt.figure(2)
 keCounts, keEdges, patches = plt.hist(KineticEnergy,n,(0,800),histtype='step',log=True) ## want to keep the y-axis values 
 
@@ -148,7 +151,7 @@ plt.show()
 # #### Great work! 
 # Save these plots to represent your raw data in your report. If you're using a jupyter notebook, save and checkpoint the notebook here. 
 
-# ## Day 2: Fitting
+# ## Day 2 : Fitting
 # Fit the background on either side of the signal peak in your mass distribution. 
 # 
 # #### Vocab: imagine a mass plot with a bump in the middle
@@ -166,7 +169,7 @@ iMax = int(round((peakmax-Min)/BinWidth))
 print iMin,iMax
 
 # REMOVE the peak window completely from your list of: 
-# mass centers, mass counts, and mass uncertainties. 
+# mass bin centers, mass counts, and mass uncertainties. 
 # This forms your BACKGROUND dataset
 bkgCounts = massCounts[0:iMin].tolist() + massCounts[iMax:-1].tolist()
 bkgCenters = massCenters[0:iMin].tolist() + massCenters[iMax:-1].tolist()
@@ -174,7 +177,6 @@ bkgError = [[],[]]
 bkgError[0] = error[0][0:iMin].tolist() + error[0][iMax:-1].tolist()
 bkgError[1] = error[1][0:iMin].tolist() + error[1][iMax:-1].tolist()
 
-# Check: edges should have 1 more than the others
 print len(bkgCounts),len(bkgCenters),len(bkgError[0])
 
 
@@ -270,7 +272,7 @@ plt.show()
 # #### Great work!
 # Save the data+background and signal-only plots for the analysis section of your report. 
 
-# ## Day 3: Characterization
+# ## Day 3 : Characterization
 # Determine which particle you've discovered and use a fit to find its properties. 
 # 
 # #### EXTRACT the characteristics of your signal peak
@@ -323,6 +325,7 @@ print "Width =",abs(gausParams[2]),"+/-",gausUncerts[2][2]
 # 
 # *SOLUTION: NSignal = sum up counts from "sig counts". NBackground = sum up counts from "fittedcounts" (iMin to iMax). Of course, the groups are free to integrate their 2 fitted functions from peakmin to peakmax! For uncertainties, they should be able to show that sqrt(sumtotal) is really what you get from propagation of sqrt(N) errors through the sum.*
 
+# Print signal and background counts with uncertainties
 bkginpeak = sum(fittedCounts[iMin:iMax])
 siginpeak = sum(signalCounts[iMin:iMax])
 print 'NBkg =',bkginpeak,'+/-',math.sqrt(bkginpeak)

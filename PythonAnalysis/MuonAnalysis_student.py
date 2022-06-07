@@ -248,17 +248,6 @@ numpars = int(input('How many polynomial parameters? 1 (flat), 2 (line), etc: ')
 def Gaus(x,amplitude,mean,sigma):
     return amplitude*np.exp(-(x-mean)**2/(2*sigma**2))
 
-
-* A Gaussian function *Gaus* has been defined below. It takes x-axis values, an amplitude, a mean, and a width.
-#  * The *curve_fit* function returns lists of fitted parameters and uncertainties when given a fit function, x and y-axis values, and initial conditions for the function's parameters. 
-#  * Read about how to use this function at https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.curve_fit.html
-#  
-# *SOLUTION: they should do well with a Gaussian shape. The initial conditions can be basic like p0=[1, (eyeballed peak center), 0.5]*
-
-def Gaus(x,amplitude,mean,sigma):
-    return amplitude*np.exp(-(x-mean)**2/(2*sigma**2))
-
-
 # Use curve_fit to fit your signal peak using Gaus as the fit function
 
 

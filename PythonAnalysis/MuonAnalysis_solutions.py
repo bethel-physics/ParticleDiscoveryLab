@@ -191,7 +191,7 @@ print len(bkgCounts),len(bkgCenters),len(bkgError[0])
 # 
 # #### EVALUATE your fit:
 #  * Plotting: does the shape make any sense? 
-#  * Chi^2 is defined in "Place Holder". It describes the difference between the points and the fitted curve. LARGER chi^2 tends to mean more difference or scatter of points.
+#  * Chi^2 is defined on https://en.wikipedia.org/wiki/Reduced_chi-squared_statistic. It describes the difference between the points and the fitted curve. LARGER chi^2 tends to mean more difference or scatter of points.
 #  * OPTIMALLY, Chi^2 / (# points - # parameters) is around 1
 # 
 # #### REPEAT fitting until you are satisfied with both of these metrics
@@ -282,9 +282,14 @@ plt.show()
 # *SOLUTION: they should do well with a Gaussian shape. The initial conditions can be basic like p0=[1, (eyeballed peak center), 0.5]*
 # 
 # #### Tools: 
-#  * A Gaussian function *Gaus* has been defined below. It takes x-axis values, an amplitude, a mean, and a width.
-#  * The *curve_fit* function returns lists of fitted parameters and uncertainties when given a fit function, x and y-axis values, and initial conditions for the function's parameters. 
-#  * Read about how to use this function at https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.curve_fit.html
+# * A Gaussian function *Gaus* has been defined below:
+#    * Inputs: x (list of x-axis values), amplitude, mean, sigma (parameters of a Gaussian distribution)
+#    * Outputs: list of y-axis values corresponding to the Gaussian curve
+# * The *curve_fit* function:
+#    * Outputs: it returns lists of fitted parameters and uncertainties
+#    * Inputs: it is given a fit function, x and y-axis values, and initial conditions for the function's parameters
+#    * Usage Example: gausParams,gausUncerts = curve_fit(fit function, x, y, initial conditions)
+#    * Read about how to use this function at https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.curve_fit.html
 #  
 # *SOLUTION: they should do well with a Gaussian shape. The initial conditions can be basic like p0=[1, (eyeballed peak center), 0.5]*
 

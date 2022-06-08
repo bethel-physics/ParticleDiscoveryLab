@@ -176,7 +176,7 @@ peakmax = float(input('Enter your peak maximum (in GeV) '))
 # 
 # #### EVALUATE your fit:
 #  * Plotting: does the shape make any sense? 
-#  * Chi^2 is defined in "Place Holder". It describes the difference between the points and the fitted curve. LARGER chi^2 tends to mean more difference or scatter of points.
+#  * Chi^2 is defined on https://en.wikipedia.org/wiki/Reduced_chi-squared_statistic. It describes the difference between the points and the fitted curve. LARGER chi^2 tends to mean more difference or scatter of points.
 #  * OPTIMALLY, Chi^2 / (# points - # parameters) is around 1
 # 
 # #### REPEAT fitting until you are satisfied with both of these metrics

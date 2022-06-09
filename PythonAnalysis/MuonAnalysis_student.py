@@ -91,7 +91,7 @@ print "Done!"
 # #### Tools:   plt.errorbar: 
 # 
 # plt.errorbar draws dots+bars when given x-axis bin centers, y-axis values, and up/down uncertainties. 
-# Look up its drawing options: https://matplotlib.org/stable/gallery/statistics/errorbar_features                                                                                       
+# Look up its command options: https://matplotlib.org/stable/gallery/statistics/errorbar_features                                                                                       
 
 # Calculate lists of uncertainty values for plt.errorbar
 

@@ -52,6 +52,7 @@ for i in range(Ntoprocess):
 
 
     ## Store mass and KE for events with mass inside your window
+    ## Tip: make sure your mass value is "real" by using .real after the mass
 
 
 

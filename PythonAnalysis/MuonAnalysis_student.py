@@ -54,9 +54,9 @@ for i in range(Ntoprocess):
     ## Store mass and KE for events with mass inside your window
     ## Tip: make sure your mass value is "real" by using .real after the mass
     if M > Min and M < Max:
-        Masses.append()
+        Masses.append() #fill in .append()
         
-        KineticEnergy.append()
+        KineticEnergy.append() #fill in .append()
 
 
 
@@ -86,9 +86,9 @@ print "Done!"
 # Draw your mass histogram. Use plt.show() to draw your plot. 
 # Be sure to save your y-axis values! 
 plt.figure()
-massCounts, massEdges, patches = plt.hist()
-plt.xlabel('')
-plt.ylabel('')
+massCounts, massEdges, patches = plt.hist() #fill in .hist()
+plt.xlabel('') #fill in label()
+plt.ylabel('') #fill in label()
 plt.show()
 
 
@@ -115,8 +115,8 @@ massCenters = massCenters[:-1]
 # Draw the new plot with error bars
 
 
-plt.xlabel('')
-plt.ylabel('')
+plt.xlabel('') #fill in label()
+plt.ylabel('') #fill in label()
 plt.show()
 
 
@@ -140,8 +140,8 @@ keCenters = keCenters[:-1]
 
 # Draw the new plot with error bars
 
-plt.xlabel('')
-plt.ylabel('')
+plt.xlabel('') #fill in label()
+plt.ylabel('') #fill in label()
 plt.show()
 
 
@@ -218,8 +218,8 @@ plt.figure()
 
 
 
-plt.xlabel('')
-plt.ylabel('')
+plt.xlabel('') #fill in label()
+plt.ylabel('') #fill in label()
 plt.show()
 
 
@@ -232,6 +232,17 @@ plt.show()
 # How will you estimate background in the signal peak window? 
 
 # Draw your background estimate on top of your full mass distribution
+
+
+
+plt.figure()
+
+
+
+
+plt.xlabel('') #fill in label()
+plt.ylabel('') #fill in label()
+plt.show()
 
 
 
@@ -249,7 +260,17 @@ plt.show()
 # 
 # How could you find the uncertainty in data - background?
 
-# Subtract background and plot the resulting signal with error bars
+# Subtract background and plot the resulting signal-only peak with error bars
+signalCounts =
+signalErrors = [[],[]]
+signalErrors[0] =
+signalErrors[1] =
+
+
+
+plt.xlabel('') #fill in label()
+plt.ylabel('') #fill in label()
+plt.show()
 
 
 
@@ -281,19 +302,22 @@ def Gaus(x,amplitude,mean,sigma):
 # Use curve_fit to fit your signal peak using Gaus as the fit function
 
 
-
-
 # Plot the fitted function on top of your signal distribution 
 # xGaus below gives you lots of x-axis points to plot a smooth curve
 xGaus = np.linspace(Min,Max,501).tolist()
 
+plt.figure()
 
 
 
+plt.xlabel('') #fill in label()
+plt.ylabel('') #fill in label()
+plt.show()
 
 # Print out the mean and width of your curve with uncertainties
 
-
+print "Mean =",  ,"+/-",  #fill the two spots with the mean and mean uncertainty
+print "Width =",  ,"+/-",  #fill the two spots with the width and width uncertainty
 
 
 
@@ -310,6 +334,8 @@ xGaus = np.linspace(Min,Max,501).tolist()
 
 
 
+print 'NBkg =',  ,'+/-',  #fill the two spots with the background count and its uncertainty
+print 'NSig =',  ,'+/-',  #fill the two spots with the signal count and its uncertainty
 
 
 # #### Almost done!

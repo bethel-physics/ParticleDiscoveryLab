@@ -49,10 +49,14 @@ for i in range(Ntoprocess):
     ## COMPUTE the mass of particle X that decays to 2 muons
     
 
-
+    M = 
 
     ## Store mass and KE for events with mass inside your window
     ## Tip: make sure your mass value is "real" by using .real after the mass
+    if M > Min and M < Max:
+        Masses.append()
+        
+        KineticEnergy.append()
 
 
 
@@ -81,7 +85,11 @@ print "Done!"
 
 # Draw your mass histogram. Use plt.show() to draw your plot. 
 # Be sure to save your y-axis values! 
-
+plt.figure()
+massCounts, massEdges, patches = plt.hist()
+plt.xlabel('')
+plt.ylabel('')
+plt.show()
 
 
 
@@ -95,41 +103,46 @@ print "Done!"
 # Look up its command options: https://matplotlib.org/stable/gallery/statistics/errorbar_features                                                                                       
 
 # Calculate lists of uncertainty values for plt.errorbar
-
-
-
+error = [[],[]]
+error[0] =
+error[1] =
 
 # Define an array of bin centers
 
-
-
+massCenters =
+massCenters = massCenters[:-1]
 
 # Draw the new plot with error bars
 
+
+plt.xlabel('')
+plt.ylabel('')
+plt.show()
 
 
 
 
 
 #  #### Draw another HISTOGRAM with error bars of counts vs kinetic energy
+plt.figure()
 # Get the y-axis values by drawing a new KE histogram
 
 
-
-
-# Calculate the uncertainties
-
-
-
-
+# Calculate lists of uncertainty values for plt.errorbar
+keerror = [[],[]]
+keerror[0] =
+keerror[1] =
 
 # Define an array of bin centers
 
-
-
-
+keCenters =
+keCenters = keCenters[:-1]
 
 # Draw the new plot with error bars
+
+plt.xlabel('')
+plt.ylabel('')
+plt.show()
 
 
 
@@ -162,9 +175,13 @@ peakmax = float(input('Enter your peak maximum (in GeV) '))
 # mass bin centers, mass counts, and mass uncertainties. 
 # This forms your BACKGROUND dataset
 
+bkgCenters =
+bkgCounts =
+bkgError = [[],[]]
+bkgError[0] =
+bkgError[1] =
 
-
-
+print len(bkgCounts),len(bkgCenters),len(bkgError[0])
 
 
 
@@ -196,7 +213,14 @@ numpars = int(input('How many polynomial parameters? 1 (flat), 2 (line), etc: ')
 
 # Plot the fit on top of the background points
 # Avoid using connecting lines between the points in your background fit
+plt.figure()
 
+
+
+
+plt.xlabel('')
+plt.ylabel('')
+plt.show()
 
 
 

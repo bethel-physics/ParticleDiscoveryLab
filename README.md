@@ -29,7 +29,7 @@ used beyond the basic MATLAB install. This package might be part of your MATLAB 
 
 **Instructors**: download this Github code! Post the student blank (`MuonAnalysis_student.mlx`) and the workspace (`DoubleMuParked_100k.mat`) on your LMS. 
 Also download the `pollsf.m` function file from Alejandro Garcia's [*Numerical Methods for Physics*](https://github.com/AlejGarcia/NM4P/tree/master/MatlabRevised) repository
-and post it for students on the LMS. The "live scripts" (.mlx) are similar to python jupyter notebooks and give a cleaner view of the instructions. Standard MATLAB files (.m) are also provided.
+and post it for students on the LMS. The "live scripts" (.mlx) are similar to python jupyter notebooks and give a cleaner view of the instructions.
 
 ### Understanding the workspace
 The workspace stored in `DoubleMuParked_100k.mat` contains the energy and 3-momentum for "muon 1" and "muon 2". When you load the workspace you'll see 4 variables: 

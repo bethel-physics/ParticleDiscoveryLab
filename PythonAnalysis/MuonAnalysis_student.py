@@ -48,8 +48,12 @@ for i in range(Ntoprocess):
     
     ## COMPUTE the mass of particle X that decays to 2 muons
     
-
-    M = 
+    E = data[i][0] + data[i][1]  ## conserve E
+    Px = data[i][2] + data[i][3] ## conserve px
+    Py = data[i][4] + data[i][5] ## conserve py
+    Pz = data[i][6] + data[i][7] ## conserve pz
+    
+    M =
 
     ## Store mass and KE for events with mass inside your window
     ## Tip: make sure your mass value is "real" by using .real after the mass

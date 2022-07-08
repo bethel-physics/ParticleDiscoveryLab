@@ -2,10 +2,10 @@
 
 import math, pickle
 import matplotlib.pyplot as plt
+import statistics as stat
 import numpy as np
 from scipy.optimize import curve_fit
 from scipy.stats import norm
-import pollsf
 
 
 # Open the data file provided by your instructor
@@ -21,10 +21,10 @@ data = pickle.load(open('DoubleMuParked_100k.pkl','rb'))
 # 
 # First choose a number of events to process, and the boundaries of your analysis window:
 
-Ntoprocess = int(raw_input("How many events to process? "))
-Min = float(raw_input("Type in your min (in GeV): "))
-Max = float(raw_input("Type in your max (in GeV): "))
-n = int(raw_input("How many x-axis bins would you like? "))
+Ntoprocess = int(input("How many events to process? "))
+Min = float(input("Type in your min (in GeV): "))
+Max = float(input("Type in your max (in GeV): "))
+n = int(input("How many x-axis bins would you like? "))
 
 # Use these to compute a bin width
 BinWidth = (Max - Min)/n
@@ -43,7 +43,7 @@ KineticEnergy = []
 #  
 # Write code to calculate the mass and KE of particle X. Store the results in Masses and KineticEnergy if the event has a mass inside your window.
 
-print "Looping over",Ntoprocess,"events..."
+print ("Looping over",Ntoprocess,"events...")
 for i in range(Ntoprocess):
     
     ## COMPUTE the mass of particle X that decays to 2 muons
@@ -53,7 +53,7 @@ for i in range(Ntoprocess):
     Py = data[i][4] + data[i][5] ## conserve py
     Pz = data[i][6] + data[i][7] ## conserve pz
     
-    M =
+    M = 
 
     ## Store mass and KE for events with mass inside your window
     ## Tip: make sure your mass value is "real" by using .real after the mass
@@ -66,7 +66,7 @@ for i in range(Ntoprocess):
 
 
         
-print "Done!"
+print ("Done!")
 
 
 # ### HISTOGRAMMING -- create mass and KE histograms              
@@ -112,13 +112,11 @@ error[0] =
 error[1] =
 
 # Define an array of bin centers
-
 massCenters =
 massCenters = massCenters[:-1]
 
 # Draw the new plot with error bars
-
-
+plt.errorbar() # fill in errorbar()
 plt.xlabel('') #fill in label()
 plt.ylabel('') #fill in label()
 plt.show()
@@ -130,7 +128,7 @@ plt.show()
 #  #### Draw another HISTOGRAM with error bars of counts vs kinetic energy
 plt.figure()
 # Get the y-axis values by drawing a new KE histogram
-
+keCounts, keEdges, patches = plt.hist() # fill in hist()
 
 # Calculate lists of uncertainty values for plt.errorbar
 keerror = [[],[]]
@@ -138,12 +136,11 @@ keerror[0] =
 keerror[1] =
 
 # Define an array of bin centers
-
 keCenters =
 keCenters = keCenters[:-1]
 
 # Draw the new plot with error bars
-
+plt.errorbar() # fill in errorbar()
 plt.xlabel('') #fill in label()
 plt.ylabel('') #fill in label()
 plt.show()
@@ -173,55 +170,24 @@ peakmax = float(input('Enter your peak maximum (in GeV) '))
 
 
 
-
-
-# REMOVE the peak window completely from your list of: 
-# mass bin centers, mass counts, and mass uncertainties. 
-# This forms your BACKGROUND dataset
-
-bkgCenters =
-bkgCounts =
-bkgError = [[],[]]
-bkgError[0] =
-bkgError[1] =
-
-print len(bkgCounts),len(bkgCenters),len(bkgError[0])
-
-
-
-# #### PERFORM a polynominal fit to the background
+# #### PERFORM a line fit to the background
 # #### THINK: 
-# Which type of curve do you expect will match your data best? Imagine a curve connecting the two sides under your peak.
-# 
-# #### Tool: 
-# The function *pollsf* is defined locally in pollsf.py.  Read pollsf.py to find information on the input and output parameters.
-# 
-# #### EVALUATE your fit:
-#  * Plotting: does the shape make any sense? 
-#  * Chi^2 is defined on https://en.wikipedia.org/wiki/Reduced_chi-squared_statistic. It describes the difference between the points and the fitted curve. LARGER chi^2 tends to mean more difference or scatter of points.
-#  * OPTIMALLY, Chi^2 / (# points - # parameters) is around 1
-# 
-# #### REPEAT fitting until you are satisfied with both of these metrics
+# Imagine a line connecting the data on wither side of your peak. How could you estimate the function of that line?
 
-# Use pollsf to fit a polynomial
-numpars = int(input('How many polynomial parameters? 1 (flat), 2 (line), etc: '))
+# Using data points from the left and right sides of your mass histograms, evaluate a linear function to represent the background events underneath the peak. 
+# Recall, the function of a line is y = mx + b 
+avgleft = [stat.mean(massCenters[0:int(n * 0.1)]), stat.mean(massCounts[0:int(n * 0.1)])]
+avgright = [stat.mean(massCenters[int(n * 0.9):-1]), stat.mean(massCounts[int(n * 0.9):-1])]
+m = (avgright[1] - avgleft[1])/(avgright[0] - avgleft[0])
+b = -(m * avgleft[0]) + avgleft[1]
 
+# Plot your background curve on top of your mass histogram
+fittedCounts = list(np.array(massCenters) * m)
+fittedCounts = [z+b for z in fittedCounts]
 
-
-
-# Print the chi2 metric described above
-
-
-
-
-
-# Plot the fit on top of the background points
-# Avoid using connecting lines between the points in your background fit
 plt.figure()
-
-
-
-
+plt.errorbar(massCenters, massCounts, yerr=error, fmt='.k', ecolor='k')
+plt.plot(massCenters,fittedCounts,'b-')
 plt.xlabel('') #fill in label()
 plt.ylabel('') #fill in label()
 plt.show()
@@ -229,28 +195,6 @@ plt.show()
 
 
 # ### SUBTRACTION -- now you will subtract that background from data
-#
-# In order to subtract the background contribution from your orginal data, you will need to estimate the background in your signal peak window.
-#
-# #### THINK: 
-# How will you estimate background in the signal peak window? 
-
-# Draw your background estimate on top of your full mass distribution
-
-
-
-plt.figure()
-
-
-
-
-plt.xlabel('') #fill in label()
-plt.ylabel('') #fill in label()
-plt.show()
-
-
-
-
 # #### THINK: 
 # Are your estimated bkg values at all uncertain? 
 # 
@@ -270,10 +214,9 @@ signalErrors = [[],[]]
 signalErrors[0] =
 signalErrors[1] =
 
-
-
-plt.xlabel('') #fill in label()
-plt.ylabel('') #fill in label()
+plt.errorbar(massCenters,signalCounts,yerr=signalErrors)
+plt.xlabel('') # fill in label()
+plt.ylabel('') # fill in label()
 plt.show()
 
 
@@ -304,27 +247,25 @@ def Gaus(x,amplitude,mean,sigma):
     return amplitude*np.exp(-(x-mean)**2/(2*sigma**2))
 
 # Use curve_fit to fit your signal peak using Gaus as the fit function
-
+gausParams,gausUncerts = curve_fit(Gaus,massCenters,signalCounts,p0=[ , , ]) # Fill in the spaces between the commas
+print (gausParams)
 
 # Plot the fitted function on top of your signal distribution 
 # xGaus below gives you lots of x-axis points to plot a smooth curve
 xGaus = np.linspace(Min,Max,501).tolist()
 
-plt.figure()
-
-
-
-plt.xlabel('') #fill in label()
-plt.ylabel('') #fill in label()
+plt.figure(5)
+plt.errorbar(massCenters, signalCounts, yerr=signalErrors, fmt='r.',ecolor='r')
+plt.plot(xGaus, Gaus(xGaus,*gausParams), 'b')
+plt.xlabel('dimuon mass (GeV)')
+plt.ylabel('number of events')
+plt.title('Fitted signal')
 plt.show()
 
 # Print out the mean and width of your curve with uncertainties
 
-print "Mean =",  ,"+/-",  #fill the two spots with the mean and mean uncertainty
-print "Width =",  ,"+/-",  #fill the two spots with the width and width uncertainty
-
-
-
+print ("Mean =",gausParams[1],"+/-",gausUncerts[1][1])
+print ("Width =",abs(gausParams[2]),"+/-",gausUncerts[2][2])
 
 # #### COMPARE: the number of signal events in signal peak window to the number of background events under the peak window.
 # #### THINK: 
@@ -336,11 +277,10 @@ print "Width =",  ,"+/-",  #fill the two spots with the width and width uncertai
 
 # Print signal and background counts with uncertainties
 
-
-
-print 'NBkg =',  ,'+/-',  #fill the two spots with the background count and its uncertainty
-print 'NSig =',  ,'+/-',  #fill the two spots with the signal count and its uncertainty
-
+bkginpeak = sum(fittedCounts[iMin:iMax]) # Replace iMin and iMax with the values you found when you converted the mass values to bin numbers
+siginpeak = sum(signalCounts[iMin:iMax]) # Replace iMin and iMax with the values you found when you converted the mass values to bin numbers
+print ('NBkg =',bkginpeak,'+/-',math.sqrt(bkginpeak))
+print ('NSig =',siginpeak,'+/-',math.sqrt(siginpeak))
 
 # #### Almost done!
 # #### THINK: 

@@ -2,10 +2,11 @@
 
 import math, pickle
 import matplotlib.pyplot as plt
+import statistics as stat
 import numpy as np
 from scipy.optimize import curve_fit
 from scipy.stats import norm
-import pollsf
+
 
 
 # Open the data file provided by your instructor
@@ -21,10 +22,10 @@ data = pickle.load(open('DoubleMuParked_100k.pkl','rb'))
 # 
 # First choose a number of events to process, and the boundaries of your analysis window:
 
-Ntoprocess = int(raw_input("How many events to process? "))
-Min = float(raw_input("Type in your min (in GeV): "))
-Max = float(raw_input("Type in your max (in GeV): "))
-n = int(raw_input("How many x-axis bins would you like? "))
+Ntoprocess = int(input("How many events to process? "))
+Min = float(input("Type in your min (in GeV): "))
+Max = float(input("Type in your max (in GeV): "))
+n = int(input("How many x-axis bins would you like? "))
 
 # Use these to compute a bin width
 BinWidth = (Max - Min)/n
@@ -43,7 +44,7 @@ KineticEnergy = []
 #  
 # Write code to calculate the mass and KE of particle X. Store the results in Masses and KineticEnergy if the event has a mass inside your window.
 
-print "Looping over",Ntoprocess,"events..."
+print ("Looping over",Ntoprocess,"events...")
 for i in range(Ntoprocess):
     
     ## COMPUTE the mass of particle X that decays to 2 muons
@@ -62,7 +63,7 @@ for i in range(Ntoprocess):
         KE = E - M  ## relativistic KE the easy way!
         KineticEnergy.append(KE)
         
-print "Done!"
+print ("Done!")
 
 
 # ### HISTOGRAMMING -- create mass and KE histograms              
@@ -148,6 +149,8 @@ plt.title('Kinetic Energy')
 plt.show()
 
 
+
+
 # #### Great work! 
 # Save these plots to represent your raw data in your report. If you're using a jupyter notebook, save and checkpoint the notebook here. 
 
@@ -166,69 +169,24 @@ peakmax = float(input('Enter your peak maximum (in GeV) '))
 # Convert these mass values to bin numbers
 iMin = int(round((peakmin-Min)/BinWidth)) # Just an example: fine to hardcode numbers
 iMax = int(round((peakmax-Min)/BinWidth))
-print iMin,iMax
+print (iMin,iMax)
 
-# REMOVE the peak window completely from your list of: 
-# mass bin centers, mass counts, and mass uncertainties. 
-# This forms your BACKGROUND dataset
-bkgCounts = massCounts[0:iMin].tolist() + massCounts[iMax:-1].tolist()
-bkgCenters = massCenters[0:iMin].tolist() + massCenters[iMax:-1].tolist()
-bkgError = [[],[]]
-bkgError[0] = error[0][0:iMin].tolist() + error[0][iMax:-1].tolist()
-bkgError[1] = error[1][0:iMin].tolist() + error[1][iMax:-1].tolist()
-
-print len(bkgCounts),len(bkgCenters),len(bkgError[0])
-
-
-# #### PERFORM a polynominal fit to the background
+# #### PERFORM a line fit to the background
 # #### THINK: 
-# Which type of curve do you expect will match your data best? Imagine a curve connecting the two sides under your peak.
-# 
-# *SOLUTION: Probably a line, or 2rd/3rd order poly, likely not much higher*
-# 
-# #### Tool: 
-# The function *pollsf* is defined locally in pollsf.py.  Read pollsf.py to find information on the input and output parameters.
-# 
-# #### EVALUATE your fit:
-#  * Plotting: does the shape make any sense? 
-#  * Chi^2 is defined on https://en.wikipedia.org/wiki/Reduced_chi-squared_statistic. It describes the difference between the points and the fitted curve. LARGER chi^2 tends to mean more difference or scatter of points.
-#  * OPTIMALLY, Chi^2 / (# points - # parameters) is around 1
-# 
-# #### REPEAT fitting until you are satisfied with both of these metrics
+# Imagine a line connecting the data on wither side of your peak. How could you estimate the function of that line?
 
-# Use pollsf to fit a polynomial
-numpars = int(input('How many polynomial parameters? 1 (flat), 2 (line), etc: '))
-params,paramerrs,fityvals,chisq = pollsf.pollsf(bkgCenters,bkgCounts,bkgError[1],numpars)
+# Using data points from the left and right sides of your mass histograms, evaluate a linear function to represent the background events underneath the peak. 
+# Recall, the function of a line is y = mx + b 
+avgleft = [stat.mean(massCenters[0:int(n * 0.1)]), stat.mean(massCounts[0:int(n * 0.1)])]
+avgright = [stat.mean(massCenters[int(n * 0.9):-1]), stat.mean(massCounts[int(n * 0.9):-1])]
+m = (avgright[1] - avgleft[1])/(avgright[0] - avgleft[0])
+b = -(m * avgleft[0]) + avgleft[1]
 
-# Print the chi2 metric
-print chisq/(len(bkgCenters) - numpars)
+# Plot your background curve on top of your mass histogram
+fittedCounts = list(np.array(massCenters) * m)
+fittedCounts = [z+b for z in fittedCounts]
 
-# Plot the fit on top of the background points
-# Avoid using connecting lines between the points in your background fit
-plt.figure(3)
-plt.errorbar(bkgCenters, bkgCounts, yerr=bkgError, fmt='.k', ecolor='k')
-plt.plot(bkgCenters,fityvals,'b-')
-plt.xlabel('dimuon mass (GeV)')
-plt.ylabel('number of muon pairs')
-plt.title('Fit validation')
-plt.show()
-
-
-# ### SUBTRACTION -- now you will subtract that background from data
-#
-# In order to subtract the background contribution from your orginal data, you will need to estimate the background in your signal peak window.
-#
-# *SOLUTION: Evaluate the function at x-values inside the peak window.*
-#
-# #### THINK: 
-# How will you estimate background in the signal peak window? 
-
-# Draw your background estimate on top of your full mass distribution
-paramlist = params.tolist()
-paramlist.reverse() # polyval wants a flipped order of parameters
-fittedCounts = np.polyval(paramlist,massCenters)
-
-plt.figure(4)
+plt.figure()
 plt.errorbar(massCenters, massCounts, yerr=error, fmt='.k', ecolor='k')
 plt.plot(massCenters,fittedCounts,'b-')
 plt.xlabel('dimuon mass (GeV)')
@@ -237,6 +195,7 @@ plt.title('Data and background estimate')
 plt.show()
 
 
+# ### SUBTRACTION -- now you will subtract that background from data
 # #### THINK: 
 # Are your estimated bkg values at all uncertain? 
 # 
@@ -299,7 +258,7 @@ def Gaus(x,amplitude,mean,sigma):
 
 # Use curve_fit to fit your signal peak using Gaus as the fit function
 gausParams,gausUncerts = curve_fit(Gaus,massCenters,signalCounts,p0=[1,3,0.1])
-print gausParams
+print (gausParams)
 
 
 # Plot the fitted function on top of your signal distribution 
@@ -316,8 +275,8 @@ plt.show()
 
 # Print out the mean and width of your curve with uncertainties
 # SOLUTION: they need to access specific elements of paramsGaus and covariance. The 2nd element is the mean and the 3rd element is the width.
-print "Mean =",gausParams[1],"+/-",gausUncerts[1][1]
-print "Width =",abs(gausParams[2]),"+/-",gausUncerts[2][2]
+print ("Mean =",gausParams[1],"+/-",gausUncerts[1][1])
+print ("Width =",abs(gausParams[2]),"+/-",gausUncerts[2][2])
 
 
 # #### COMPARE: the number of signal events in signal peak window to the number of background events under the peak window.
@@ -333,8 +292,8 @@ print "Width =",abs(gausParams[2]),"+/-",gausUncerts[2][2]
 # Print signal and background counts with uncertainties
 bkginpeak = sum(fittedCounts[iMin:iMax])
 siginpeak = sum(signalCounts[iMin:iMax])
-print 'NBkg =',bkginpeak,'+/-',math.sqrt(bkginpeak)
-print 'NSig =',siginpeak,'+/-',math.sqrt(siginpeak)
+print ('NBkg =',bkginpeak,'+/-',math.sqrt(bkginpeak))
+print ('NSig =',siginpeak,'+/-',math.sqrt(siginpeak))
 
 
 # #### Almost done!

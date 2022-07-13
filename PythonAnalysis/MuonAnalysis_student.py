@@ -12,7 +12,7 @@ from scipy.stats import norm
 data = pickle.load(open('DoubleMuParked_100k.pkl','rb'))
 
 
-# ## Day 1 : Reconstruction
+# ## Part 1 : Reconstruction
 # 
 # Your first task is to load the CMS data file!
 # Each data element has 8 pieces of information:
@@ -151,9 +151,9 @@ plt.show()
 
 
 # #### Great work! 
-# Save these plots to represent your raw data in your report. If you're using a jupyter notebook, save and checkpoint the notebook here. 
+# Save these plots to represent your raw data in your report. If you're using a jupyter notebook, save the notebook here. 
 
-# ## Day 2 : Fitting
+# ## Part 2 : Fitting
 # Fit the background on either side of the signal peak in your mass distribution. 
 # 
 # #### Vocab: imagine a mass plot with a bump in the middle
@@ -226,7 +226,7 @@ plt.show()
 # #### Great work!
 # Save the data+background and signal-only plots for the analysis section of your report. 
 
-# ## Day 3 : Characterization
+# ## Part 3 : Characterization
 # Determine which particle you've discovered and use a fit to find its properties. 
 # 
 # #### EXTRACT the characteristics of your signal peak

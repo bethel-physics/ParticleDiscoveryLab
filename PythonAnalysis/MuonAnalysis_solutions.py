@@ -173,7 +173,7 @@ print (iMin,iMax)
 
 # #### PERFORM a line fit to the background
 # #### THINK: 
-# Imagine a line connecting the data on wither side of your peak. How could you estimate the function of that line?
+# Imagine a line connecting the data on either side of your peak. How could you estimate the function of that line?
 
 # Using data points from the left and right sides of your mass histograms, evaluate a linear function to represent the background events underneath the peak. 
 # Recall, the function of a line is y = mx + b 

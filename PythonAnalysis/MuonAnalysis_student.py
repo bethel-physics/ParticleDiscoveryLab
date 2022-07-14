@@ -80,8 +80,8 @@ print ("Done!")
 # Make a quick sketch of what you expect for both plots                            
 #                                                                                          
 # #### Vocab: imagine plot with 3 bins on x-axis: 0-10, 10-20, 20-30                           
-#  * "Bin edges": 0, 10, 20, 30                                                              
 #  * "Bin centers": 5, 15, 25 (want dots on plot to be here!)                                
+#  * "Bin width": 10  (you already have this for mass)
 #  * "Bin counts": the height of the histogram bar in each bin
 #  
 # #### Tools: plt.hist

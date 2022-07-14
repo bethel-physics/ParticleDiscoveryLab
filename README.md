@@ -1,6 +1,6 @@
 [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/bethel-physics/ParticleDiscoveryLab/HEAD)
 
-# Particle Discovery lab (for instructors!)
+# Particle Discovery lab (a shorter version for students!)
 
 The particle discovery lab uses [CMS dimuon data from 2012](http://doi.org/10.7483/OPENDATA.CMS.LVG5.QT81) published via the [CERN Open Data Portal](http://opendata.cern.ch/). 
 We have developed an undergraduate intermediate-level lab exercise to complement the many high school-level exercises available via the Open Data Portal.

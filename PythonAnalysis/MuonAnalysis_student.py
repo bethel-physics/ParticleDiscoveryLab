@@ -164,7 +164,7 @@ plt.show()
 #  * "signal": events in the peak window minus the background
 
 # Choose mass values or bin numbers for where the peak lies
-peakmin = float(input('Enter your peak minimum (in GeV)'))
+peakmin = float(input('Enter your peak minimum (in GeV) '))
 peakmax = float(input('Enter your peak maximum (in GeV) '))
 
 # Convert these mass values to bin numbers

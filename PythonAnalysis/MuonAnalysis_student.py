@@ -1,5 +1,6 @@
 ### Welcome to the Particle Discovery Lab!
 
+# Your first task is to load the CMS data file!
 import math, pickle
 import matplotlib.pyplot as plt
 import statistics as stat
@@ -14,10 +15,11 @@ data = pickle.load(open('DoubleMuParked_100k.pkl','rb'))
 
 # ## Part 1 : Reconstruction
 # 
-# Your first task is to load the CMS data file!
-# Each data element has 8 pieces of information:
+# Each element of `data` contains 8 pieces of information in this order:
 # 
 # `E1`, `E2`, `px1`, `px2`, `py1`, `py2`, `pz1`, `pz2`
+# 
+# (where "1" refers to "muon 1" and "2" refers to "muon 2"). The default unit for these numerical values is the GeV.
 # 
 # First choose a number of events to process, and the boundaries of your analysis window:
 
@@ -47,25 +49,25 @@ print ("Looping over",Ntoprocess,"events...")
 for i in range(Ntoprocess):
     
     ## COMPUTE the mass of particle X that decays to 2 muons
+    ## Recall, the order of information stored in the list called data is given above.
+    ## The energy of muon number 1 can be accessed like data[i][1].
     
-    E = data[i][0] + data[i][1]  ## conserve E
-    Px = data[i][2] + data[i][3] ## conserve px
-    Py = data[i][4] + data[i][5] ## conserve py
-    Pz = data[i][6] + data[i][7] ## conserve pz
+    E =
+    Px =
+    Py =
+    Pz =
     
     M = 
 
     ## Store mass and KE for events with mass inside your window
     ## Tip: make sure your mass value is "real" by using .real after the mass
     if M > Min and M < Max:
-        Masses.append() #fill in .append()
+        Masses.append(M.real)
         
-        KineticEnergy.append() #fill in .append()
+        KE = 
+        KineticEnergy.append(KE)
 
 
-
-
-        
 print ("Done!")
 
 
@@ -80,12 +82,12 @@ print ("Done!")
 # #### Vocab: imagine plot with 3 bins on x-axis: 0-10, 10-20, 20-30                           
 #  * "Bin edges": 0, 10, 20, 30                                                              
 #  * "Bin centers": 5, 15, 25 (want dots on plot to be here!)                                
-#  * "Bin width": 10  (you already have this for mass)
+#  * "Bin counts": the height of the histogram bar in each bin
 #  
 # #### Tools: plt.hist
-# plt.hist creates histograms when given a list of data, number of bins, and x-axis range. Look up its arguments and outputs!
+# plt.hist creates histograms when given a list of data and number of bins. Look up its arguments and outputs!
 # 
-# Create a MASS histogram:
+# Create a MASS histogram by filling in the empty functions below when prompted to do so:
 
 # Draw your mass histogram. Use plt.show() to draw your plot. 
 # Be sure to save your y-axis values! 
@@ -103,7 +105,7 @@ plt.show()
 #  
 # #### Tools:   plt.errorbar: 
 # 
-# plt.errorbar draws dots+bars when given x-axis bin centers, y-axis values, and up/down uncertainties. 
+# plt.errorbar draws dots+bars when given x-axis bin centers, y-axis bin counts, and up/down uncertainties. 
 # Look up its command options: https://matplotlib.org/stable/gallery/statistics/errorbar_features                                                                                       
 
 # Calculate lists of uncertainty values for plt.errorbar
@@ -113,7 +115,7 @@ error[1] =
 
 # Define an array of bin centers
 massCenters =
-massCenters = massCenters[:-1]
+massCenters = massCenters[:-1] # Remove the last element in the array 
 
 # Draw the new plot with error bars
 plt.errorbar() # fill in errorbar()
@@ -137,7 +139,7 @@ keerror[1] =
 
 # Define an array of bin centers
 keCenters =
-keCenters = keCenters[:-1]
+keCenters = keCenters[:-1] # Remove the last element in the array 
 
 # Draw the new plot with error bars
 plt.errorbar() # fill in errorbar()
@@ -153,7 +155,7 @@ plt.show()
 # #### Great work! 
 # Save these plots to represent your raw data in your report. If you're using a jupyter notebook, save the notebook here. 
 
-# ## Part 2 : Fitting
+# ## Part 2 : Background Estimation
 # Fit the background on either side of the signal peak in your mass distribution. 
 # 
 # #### Vocab: imagine a mass plot with a bump in the middle
@@ -166,7 +168,9 @@ peakmin = float(input('Enter your peak minimum (in GeV)'))
 peakmax = float(input('Enter your peak maximum (in GeV) '))
 
 # Convert these mass values to bin numbers
-
+iMin =
+iMax =
+print (iMin,iMax)
 
 
 
@@ -186,7 +190,7 @@ fittedCounts = list(np.array(massCenters) * m)
 fittedCounts = [z+b for z in fittedCounts]
 
 plt.figure()
-plt.errorbar(massCenters, massCounts, yerr=error, fmt='.k', ecolor='k')
+plt.errorbar(massCenters, massCounts, yerr=error)
 plt.plot(massCenters,fittedCounts,'b-')
 plt.xlabel('') #fill in label()
 plt.ylabel('') #fill in label()
@@ -246,8 +250,13 @@ plt.show()
 def Gaus(x,amplitude,mean,sigma):
     return amplitude*np.exp(-(x-mean)**2/(2*sigma**2))
 
+# Looking at your mass histogram, guess the inital conditions of the Gaussian distribution that would destribe your signal peak.  
+# You will need to guess the amplipitude, the mean, and the standard deviation.
+
+initialguess = [ , , ] # Fill in the spaces between the commas
+
 # Use curve_fit to fit your signal peak using Gaus as the fit function
-gausParams,gausUncerts = curve_fit(Gaus,massCenters,signalCounts,p0=[ , , ]) # Fill in the spaces between the commas
+gausParams,gausUncerts = curve_fit(Gaus,massCenters,signalCounts,initialguess) 
 print (gausParams)
 
 # Plot the fitted function on top of your signal distribution 
@@ -277,8 +286,8 @@ print ("Width =",abs(gausParams[2]),"+/-",gausUncerts[2][2])
 
 # Print signal and background counts with uncertainties
 
-bkginpeak = sum(fittedCounts[iMin:iMax]) # Replace iMin and iMax with the values you found when you converted the mass values to bin numbers
-siginpeak = sum(signalCounts[iMin:iMax]) # Replace iMin and iMax with the values you found when you converted the mass values to bin numbers
+bkginpeak = sum(fittedCounts[iMin:iMax])
+siginpeak = sum(signalCounts[iMin:iMax])
 print ('NBkg =',bkginpeak,'+/-',math.sqrt(bkginpeak))
 print ('NSig =',siginpeak,'+/-',math.sqrt(siginpeak))
 

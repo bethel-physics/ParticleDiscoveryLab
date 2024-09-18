@@ -71,6 +71,7 @@ You will want to **provide students a mass window** in which to search. Tested, 
 
 The following python packages are needed for the exercise:
  * [matplotlib](https://matplotlib.org/)
+ * [PyQt6](https://pypi.org/project/PyQt6/)
  * [pickle](https://docs.python.org/3/library/pickle.html)
  * [numpy](https://numpy.org/)
  * [scipy](https://www.scipy.org/)

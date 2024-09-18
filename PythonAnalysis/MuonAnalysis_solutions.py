@@ -21,10 +21,12 @@ data = pickle.load(open('DoubleMuon_2016H_200k.pkl','rb'))
 # 
 # First choose a number of events to process, and the boundaries of your analysis window:
 
-Ntoprocess = int(raw_input("How many events to process? "))
-Min = float(raw_input("Type in your min (in GeV): "))
-Max = float(raw_input("Type in your max (in GeV): "))
-n = int(raw_input("How many x-axis bins would you like? "))
+print("Welcome to the Muon Analysis! This solutions script is ready to run -- enter a Min value of 2.8 and a Max value of 3.1. For any other mass range you should read the script and adjust the Gaussian fit near the end to use a different initial guess. For understanding, read the script first and consider running in segments by commenting out later segments of the script.\n\n")
+
+Ntoprocess = int(input("How many events to process? "))
+Min = float(input("Type in your min (in GeV): "))
+Max = float(input("Type in your max (in GeV): "))
+n = int(input("How many x-axis bins would you like? "))
 
 # Use these to compute a bin width
 BinWidth = (Max - Min)/n
@@ -62,7 +64,7 @@ for i in range(Ntoprocess):
         KE = E - M  ## relativistic KE the easy way!
         KineticEnergy.append(KE)
         
-print("Done!")
+print("Done! (Close the figure to show the next, keep closing figures to move on)")
 
 
 # ### HISTOGRAMMING -- create mass and KE histograms              
@@ -160,13 +162,13 @@ plt.show()
 #  * "signal": events in the peak window minus the background
 
 # Choose mass values or bin numbers for where the peak lies
-peakmin = float(input('Enter your peak minimum (in GeV)'))
+peakmin = float(input('Enter your peak minimum (in GeV) '))
 peakmax = float(input('Enter your peak maximum (in GeV) '))
 
 # Convert these mass values to bin numbers
 iMin = int(round((peakmin-Min)/BinWidth)) # Just an example: fine to hardcode numbers
 iMax = int(round((peakmax-Min)/BinWidth))
-print(iMin,iMax)
+#print(iMin,iMax)
 
 # REMOVE the peak window completely from your list of: 
 # mass bin centers, mass counts, and mass uncertainties. 
@@ -177,7 +179,7 @@ bkgError = [[],[]]
 bkgError[0] = error[0][0:iMin].tolist() + error[0][iMax:-1].tolist()
 bkgError[1] = error[1][0:iMin].tolist() + error[1][iMax:-1].tolist()
 
-print(len(bkgCounts),len(bkgCenters),len(bkgError[0]))
+#print(len(bkgCounts),len(bkgCenters),len(bkgError[0]))
 
 
 # #### PERFORM a polynominal fit to the background
@@ -201,7 +203,7 @@ numpars = int(input('How many polynomial parameters? 1 (flat), 2 (line), etc: ')
 params,paramerrs,fityvals,chisq = pollsf.pollsf(bkgCenters,bkgCounts,bkgError[1],numpars)
 
 # Print the chi2 metric
-print(chisq/(len(bkgCenters) - numpars))
+print("Chisq metric:",chisq/(len(bkgCenters) - numpars)," (close the next figure to move on)")
 
 # Plot the fit on top of the background points
 # Avoid using connecting lines between the points in your background fit
@@ -299,7 +301,7 @@ def Gaus(x,amplitude,mean,sigma):
 
 # Use curve_fit to fit your signal peak using Gaus as the fit function
 gausParams,gausUncerts = curve_fit(Gaus,massCenters,signalCounts,p0=[1,3,0.1])
-print(gausParams)
+print("Gaussian parameters:",gausParams," (close the next figure to move on)")
 
 
 # Plot the fitted function on top of your signal distribution 

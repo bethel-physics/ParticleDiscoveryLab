@@ -9,7 +9,7 @@ import pollsf
 
 
 # Open the data file provided by your instructor
-data = pickle.load(open('DoubleMuParked_100k.pkl','rb'))
+data = pickle.load(open('DoubleMuon_2016H_200k.pkl','rb'))
 
 
 # ## Day 1 : Reconstruction
@@ -43,7 +43,7 @@ KineticEnergy = []
 #  
 # Write code to calculate the mass and KE of particle X. Store the results in Masses and KineticEnergy if the event has a mass inside your window.
 
-print "Looping over",Ntoprocess,"events..."
+print("Looping over",Ntoprocess,"events...")
 for i in range(Ntoprocess):
     
     ## COMPUTE the mass of particle X that decays to 2 muons
@@ -57,7 +57,7 @@ for i in range(Ntoprocess):
 
 
         
-print "Done!"
+print("Done!")
 
 
 # ### HISTOGRAMMING -- create mass and KE histograms              

@@ -1,4 +1,4 @@
-[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/bethel-physics/ParticleDiscoveryLab/HEAD)
+[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/bethel-physics/ParticleDiscoveryLab/HEAD) [![DOI](https://zenodo.org/badge/132026337.svg)](https://zenodo.org/doi/10.5281/zenodo.13787598)
 
 # Particle Discovery lab (for students!)
 

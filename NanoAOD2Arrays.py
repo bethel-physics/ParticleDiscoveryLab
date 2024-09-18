@@ -72,7 +72,7 @@ posMuon1 = TLorentzVector()
 negMuon1 = TLorentzVector()
 data = []
 isaved = 0
-textfile = open("DoubleMuParked_100k.txt", "w")
+textfile = open("DoubleMuon_2016H_200k.txt", "w")
 
 ## Loop over the events in the tree chain
 for ievent in range(t.GetEntries()):

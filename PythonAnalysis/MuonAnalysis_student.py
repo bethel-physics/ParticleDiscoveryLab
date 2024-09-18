@@ -21,10 +21,13 @@ data = pickle.load(open('DoubleMuon_2016H_200k.pkl','rb'))
 # 
 # First choose a number of events to process, and the boundaries of your analysis window:
 
-Ntoprocess = int(raw_input("How many events to process? "))
-Min = float(raw_input("Type in your min (in GeV): "))
-Max = float(raw_input("Type in your max (in GeV): "))
-n = int(raw_input("How many x-axis bins would you like? "))
+print("Welcome to the Muon Analysis! For understanding, read the script first and consider running in segments by commenting out later segments of the script, or adding an exit() statement where you want to stop. To get started, open this script and comment out this message and the following exit() statement!")
+exit()
+
+Ntoprocess = int(input("How many events to process? "))
+Min = float(input("Type in your min (in GeV): "))
+Max = float(input("Type in your max (in GeV): "))
+n = int(input("How many x-axis bins would you like? "))
 
 # Use these to compute a bin width
 BinWidth = (Max - Min)/n
@@ -48,7 +51,7 @@ for i in range(Ntoprocess):
     
     ## COMPUTE the mass of particle X that decays to 2 muons
     
-
+    dummyline = "delete me"
 
 
     ## Store mass and KE for events with mass inside your window

@@ -60,6 +60,7 @@ You can start by opening `MuonAnalysis_student.mlx` with MATLAB. This contains t
 
 The following python packages are needed for the exercise:
  * [matplotlib](https://matplotlib.org/)
+ * [PyQt6](https://pypi.org/project/PyQt6/)
  * [pickle](https://docs.python.org/3/library/pickle.html)
  * [numpy](https://numpy.org/)
  * [scipy](https://www.scipy.org/)
